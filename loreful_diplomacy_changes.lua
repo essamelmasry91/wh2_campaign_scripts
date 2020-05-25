@@ -26,149 +26,140 @@ function kill_faction_armies(faction_name)
 	end;
 end;
 
---# assume force_no_ai_peace: method(declarer: string, declaree: string)
-local function force_no_ai_peace(declarer,declaree)
-	if faction_is_human(declarer) == false and faction_is_human(declaree) == false then
+--# assume force_no_peace: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function apply_diplomacy(declarer, declaree, apply_to_player)
+	local apply = true;
+	if apply_to_player == true then
+		if faction_is_human(declarer) == true or faction_is_human(declaree) == true then
+			apply = false;
+		end
+	end
+	return apply;
+end;
+
+--# assume force_no_peace: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function force_no_peace(declarer, declaree, apply_to_player)
+	local force_no_peace = apply_diplomacy(declarer, declaree, apply_to_player);
+	if force_no_peace == true then
 		cm:force_diplomacy("faction:" .. declarer, "faction:" .. declaree, "peace", false, false, true);
 	end
 end
 
---# assume force_no_ai_war: method(declarer: string, declaree: string)
-local function force_no_ai_war(declarer,declaree)
-	if faction_is_human(declarer) == false and faction_is_human(declaree) == false then
+--# assume force_no_war: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function force_no_war(declarer, declaree, apply_to_player)
+	local force_no_war = apply_diplomacy(declarer, declaree, apply_to_player);
+	if force_no_war == true then
 		cm:force_diplomacy("faction:" .. declarer, "faction:" .. declaree, "war", false, false, true);
 	end
 end
 
---# assume declare_ai_war: method(declarer: string, declaree: string)
-local function declare_ai_war(declarer,declaree)
-	if faction_is_human(declarer) == false and faction_is_human(declaree) == false then
+--# assume force_war: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function force_war(declarer, declaree, apply_to_player)
+	local force_war = apply_diplomacy(declarer, declaree, apply_to_player);
+	if force_war == true then
 		cm:force_declare_war(declarer, declaree, true, true);
 	end
 end
 
---# assume force_ai_peace: method(declarer: string, declaree: string)
-local function force_ai_peace(declarer,declaree)
-	if faction_is_human(declarer) == false and faction_is_human(declaree) == false then
+--# assume force_ai_peace: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function force_peace(declarer, declaree, apply_to_player)
+	local force_peace = apply_diplomacy(declarer, declaree, apply_to_player);
+	if force_peace == true then
 		cm:force_make_peace(declarer, declaree);
 	end
 end
 
 --# assume confed: method(confederator: string, confederated: string, apply_to_player: boolean)
 local function confed(confederator, confederated, apply_to_player)
-	local confederate_faction = true;
-	if apply_to_player == false then
-		if faction_is_human(confederator) == true or faction_is_human(confederated) then
-			confederate_faction = false;
-		end
-	end
-	if confederate_faction == true then
+	local confederate_factions = apply_diplomacy(declarer, declaree, apply_to_player);
+	if confederate_factions then
 		cm:force_confederation(confederator, confederated);
 	end
-end
-
-local function make_undead_alliance()
-	-- factions: noctilus, luthor, mannfred and arkhan
-	-- arkhan and allies declare war with no peace on khemri
-	-- arkhan and allies declare war with no peace on sentinels
 end
 
 local function change_badlands()
 	-- give 8 peaks to skarsnik
 	confed("wh_main_grn_crooked_moon", "wh_main_grn_necksnappers", false);
 	
-	-- -- war between skarsnik and red fangs
-	-- declare_ai_war("wh_main_grn_crooked_moon", "wh_main_grn_red_fangs");
+	-- angrund, mors and skarsnik at war with no peace
+	force_war("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", true);
+	force_war("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", true);
+	force_no_peace("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", false);
+	force_no_peace("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", false);
+	force_no_peace("wh_main_grn_crooked_moon", "wh_main_dwf_karak_izor", false);
 	
-	-- -- angrund and mors in eternal war with skarsnik
-	-- declare_ai_war("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon");
-	-- force_no_ai_peace("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon");
-	-- declare_ai_war("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor");
-	-- force_no_ai_peace("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor");
+	-- war between top knotz and teef snatchaz
+	force_war("wh_main_grn_top_knotz", "wh_main_grn_teef_snatchaz", false);
 	
-	-- -- no starting war between Black crag and player dwarfs
-	-- cm:force_make_peace("wh_main_dwf_dwarfs", "wh_main_grn_greenskins");
-	-- cm:force_make_peace("wh_main_dwf_karak_izor", "wh_main_grn_greenskins");
+	-- give misty mountains to grom
+	if faction_is_human("wh2_main_hef_yvresse") == false then
+		confed("wh2_dlc15_grn_broken_axe", "wh2_dlc15_grn_skull_crag", false);
+	end
 	
-	-- -- war between grimgor and karak azul
-	-- cm:force_declare_war("wh_main_grn_greenskins", "wh_main_dwf_karak_azul", true, true);
-	
-	-- -- give crooked back mountain to clan rictus
-	-- confed("wh2_dlc09_skv_clan_rictus", "wh2_dlc14_skv_rictus_clan_nest", false);
-	
-	-- -- no starting war between top knotz and khemri
-	-- cm:force_make_peace("wh2_dlc09_tmb_khemri", "wh_main_grn_top_knotz");
-	
-	-- -- no starting war between bloody hands and dwarfs
-	-- cm:force_make_peace("wh_main_dwf_dwarfs", "wh_main_grn_orcs_of_the_bloody_hand");
-	
-	-- -- no starting war between bloody hands and border princes
-	-- cm:force_make_peace("wh_main_teb_border_princes", "wh_main_grn_orcs_of_the_bloody_hand");
-	
-	-- -- no starting war between scabby eye and dwarfs
-	-- cm:force_make_peace("wh_main_dwf_dwarfs", "wh_main_grn_scabby_eye");
-	
-	-- -- no starting war between red fangs and dwarfs
-	-- cm:force_make_peace("wh_main_dwf_dwarfs", "wh_main_grn_red_fangs");
-	
-	-- -- war between top knotz and teef snatchaz
-	-- cm:force_declare_war("wh_main_grn_top_knotz", "wh_main_grn_teef_snatchaz", true, true);
-	
-	-- -- give kradtommen and misty mountains to clan gnaw and move character there
-	-- cm:transfer_region_to_faction("wh_main_blightwater_misty_mountain", "wh2_main_skv_clan_gnaw");
-	-- cm:transfer_region_to_faction("wh_main_blightwater_kradtommen", "wh2_main_skv_clan_gnaw");
-	
-	-- -- destroy karak azgal
-	-- cm:set_region_abandoned("wh_main_blightwater_karak_azgal");
-	
-	-- -- give granite massif, deff gorge to mors to mors
-	-- cm:transfer_region_to_faction("wh2_main_charnel_valley_granite_massif", "wh2_main_skv_clan_mors");
-	-- cm:transfer_region_to_faction("wh_main_blightwater_deff_gorge", "wh2_main_skv_clan_mors");
-	
-	-- -- no starting war between mors and arachnos
-	-- force_ai_peace("wh2_main_skv_clan_mors", "wh2_main_grn_arachnos");
-	
-	-- -- confed angrund with barak var
-	-- confed("wh_main_dwf_karak_izor", "wh_main_dwf_barak_varr", false);
 end
 
--- local function change_nehekhara()
-	-- -- give eye of the panther, vulture mountain to clan mordkin
-	-- cm:transfer_region_to_faction("wh2_main_atalan_mountains_vulture_mountain", "wh2_main_skv_clan_mordkin");
-	-- cm:transfer_region_to_faction("wh2_main_atalan_mountains_eye_of_the_panther", "wh2_main_skv_clan_mordkin");	
-	-- -- destroy greybeard prospectors
-	-- kill_faction_armies("wh2_main_dwf_greybeards_prospectors");
-	-- -- war between khemri and necrach, strigoi, numas
-	-- cm:force_declare_war("wh2_dlc09_tmb_khemri", "wh2_main_vmp_strygos_empire", true, true);
-	-- declare_ai_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_numas");
-	-- declare_ai_war("wh2_dlc09_tmb_khemri", "wh2_main_vmp_necrarch_brotherhood");
-	-- -- peace between rakaph and strigoi
-	-- cm:force_make_peace("wh2_dlc09_tmb_rakaph_dynasty", "wh2_main_vmp_strygos_empire");
-	-- -- war between arkhan and rakaph
-	-- declare_ai_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_rakaph_dynasty");
-	-- -- khemri and sentinels cant declare war
-	-- force_no_ai_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_the_sentinels");
-	-- -- peace between noctilus and bordelaux, carcassone and caledor
-	-- force_ai_peace("wh2_dlc11_cst_noctilus","wh2_main_hef_caledor");
-	-- cm:force_make_peace("wh2_dlc11_cst_noctilus", "wh_main_brt_bordeleaux");
-	-- cm:force_make_peace("wh2_dlc11_cst_noctilus", "wh_main_brt_carcassonne");
-	-- -- unholy alliance
-	-- make_undead_alliance();
--- end
+local function change_nehekhara()
+	-- peace between khemri and top knotz
+	force_peace("wh2_dlc09_tmb_khemri", "wh_main_grn_top_knotz", false);
+	
+end
+
+local function change_southlands()
+	-- peace between border princes and bloody hands
+	force_peace("wh_main_teb_border_princes", "wh_main_grn_orcs_of_the_bloody_hand", false);
+end;
+
+local function change_darklands()
+	-- give crookback mountain to clan rictus
+	confed("wh2_dlc09_skv_clan_rictus", "wh2_dlc14_skv_rictus_clan_nest", false);
+end;
+
+local function change_worlds_edge_mountains()
+	-- peace between dwarfs and scabby eye
+	force_peace("wh_main_dwf_dwarfs", "wh_main_grn_scabby_eye", false);
+	
+	-- peace between dwarfs and red fangs
+	force_peace("wh_main_dwf_dwarfs", "wh_main_grn_red_fangs", true);
+	
+	-- peace between dwarfs and bloody hands
+	force_peace("wh_main_dwf_dwarfs", "wh_main_grn_orcs_of_the_bloody_hand", true);
+end;
+
+local function change_the_empire()
+end;
+
+local function change_britonnia()
+end;
+
+local function change_southern_realms()
+end;
+
+local function change_norsca()
+end;
+
+local function change_ulthuan()
+end;
+
+local function change_lustria()
+end;
+
+local function change_naggaroth()
+end;
+
 
 local function change_mortal_empires()
 	change_badlands();
-	-- change_nehekhara();
-	-- Southlands
-	-- Darklands
-	-- World's Edge Mountains
-	-- The empire
-	-- Britonnia
-	-- Southern Realms
-	-- Norsca
-	-- Ulthuan
-	-- Lustria
-	-- Naggaroth
+	change_nehekhara();
+	change_southlands();
+	change_darklands();
+	change_worlds_edge_mountains();
+	change_the_empire();
+	change_britonnia();
+	change_southern_realms();
+	change_norsca();
+	change_ulthuan();
+	change_lustria();
+	change_naggaroth();
 end
 
 function loreful_diplomacy_changes()
