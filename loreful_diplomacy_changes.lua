@@ -61,7 +61,7 @@ local function force_war(declarer, declaree, apply_to_player)
 	end
 end
 
---# assume force_ai_peace: method(declarer: string, declaree: string, apply_to_player: boolean)
+--# assume force_peace: method(declarer: string, declaree: string, apply_to_player: boolean)
 local function force_peace(declarer, declaree, apply_to_player)
 	local force_peace = apply_diplomacy(declarer, declaree, apply_to_player);
 	if force_peace == true then
@@ -75,43 +75,78 @@ local function confed(confederator, confederated, apply_to_player)
 	if confederate_factions then
 		cm:force_confederation(confederator, confederated);
 	end
-end
+end;
+
+local function transfer_region(region, faction, apply_to_player)
+	local transfer = true;
+	if apply_to_player == true then
+		if faction_is_human(faction) == true then
+			transfer = false;
+		end
+	end
+	if transfer == true then
+		cm:transfer_region_to_faction(region, faction);
+	end
+end;
 
 local function change_badlands()
 	-- give 8 peaks to skarsnik
 	confed("wh_main_grn_crooked_moon", "wh_main_grn_necksnappers", false);
 	
-	-- angrund, mors and skarsnik at war with no peace
-	force_war("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", true);
-	force_war("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", true);
-	force_no_peace("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", false);
-	force_no_peace("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", false);
-	force_no_peace("wh_main_grn_crooked_moon", "wh_main_dwf_karak_izor", false);
-	
 	-- war between top knotz and teef snatchaz
-	force_war("wh_main_grn_top_knotz", "wh_main_grn_teef_snatchaz", false);
-	
-	-- give misty mountains to grom
-	if faction_is_human("wh2_main_hef_yvresse") == false then
-		confed("wh2_dlc15_grn_broken_axe", "wh2_dlc15_grn_skull_crag", false);
+	if faction_is_human("wh_main_grn_orcs_of_the_bloody_hand") == false then
+		force_war("wh_main_grn_top_knotz", "wh_main_grn_teef_snatchaz", false);
 	end
 	
+	-- give marshes of madness to vampire counts // not lyonesse
+	if faction_is_human("wh2_dlc14_brt_chevaliers_de_lyonesse") == false then
+        confed("wh_main_vmp_vampire_counts", "wh2_main_vmp_strygos_empire", false);
+    end 
 end
 
 local function change_nehekhara()
 	-- peace between khemri and top knotz
 	force_peace("wh2_dlc09_tmb_khemri", "wh_main_grn_top_knotz", false);
 	
+	-- peace between khemri and arkhan
+	force_peace("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_followers_of_nagash", false);
+	
+	-- give zandri to khmeri // not lyoness
+	if faction_is_human("wh2_dlc14_brt_chevaliers_de_lyonesse") == false then
+		transfer_region("wh2_main_land_of_the_dead_zandri", "wh2_dlc09_tmb_khemri", false);
+	end
+	
+	-- war between khemri and Necrarch and Numas
+	force_war("wh2_dlc09_tmb_khemri", "wh2_main_vmp_necrarch_brotherhood", false);
+	force_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_numas", false);	
+	
+	-- war between arkhan and rakaph
+	force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_rakaph_dynasty", false);
+	
+	-- war between lyoness and arkhan
+	force_war("wh2_dlc14_brt_chevaliers_de_lyonesse", "wh2_dlc09_tmb_followers_of_nagash", false);
+	
 end
 
 local function change_southlands()
-	-- peace between border princes and bloody hands
-	force_peace("wh_main_teb_border_princes", "wh_main_grn_orcs_of_the_bloody_hand", false);
+	if faction_is_human("wh2_main_lzd_tlaqua") == false then
+		-- confed hexoatl with defenders
+		confed("wh2_main_lzd_hexoatl", "wh2_main_lzd_last_defenders", false);
+		
+		-- war hexoatl with mordkin
+		force_war("wh2_main_lzd_hexoatl", "wh2_main_skv_clan_mordkin", false);
+	end
 end;
 
 local function change_darklands()
 	-- give crookback mountain to clan rictus
 	confed("wh2_dlc09_skv_clan_rictus", "wh2_dlc14_skv_rictus_clan_nest", false);
+	
+	-- give nagashizzar to followers of nagash // not vmp, azhag, coast or noctilus
+	if faction_is_human("wh_main_vmp_vampire_counts") == false and faction_is_human("wh2_dlc15_grn_bonerattlaz") == false and faction_is_human("wh2_dlc11_cst_vampire_coast") == false and faction_is_human("wh2_dlc11_cst_noctilus") == false then
+		transfer_region("wh2_main_the_broken_teeth_desolation_of_nagash", "wh2_dlc09_tmb_followers_of_nagash", false);
+		transfer_region("wh2_main_the_broken_teeth_nagashizar", "wh2_dlc09_tmb_followers_of_nagash", false);
+	end
 end;
 
 local function change_worlds_edge_mountains()
@@ -126,26 +161,230 @@ local function change_worlds_edge_mountains()
 end;
 
 local function change_the_empire()
+	-- peace between empire and skullsmasherz
+	force_peace("wh_main_emp_empire", "wh_main_grn_skullsmasherz", false);
+	
+	-- peace between empire and beastmen
+	force_peace("wh_main_emp_empire", "wh_dlc03_bst_beastmen", true);
+	
+	-- peace between vlad and averland
+	force_peace("wh_main_vmp_schwartzhafen", "wh_main_emp_averland", true);
+	
+	-- give vlad templehof and oberstyre //  not vc
+	if faction_is_human("wh_main_vmp_vampire_counts") == false then
+		transfer_region("wh_main_western_sylvania_castle_templehof", "wh_main_vmp_schwartzhafen", false);
+		transfer_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_schwartzhafen", false);
+	end
+	
+	-- peace between vc and stirland
+	force_peace("wh_main_vmp_vampire_counts", "wh_main_emp_stirland", true);
 end;
 
 local function change_britonnia()
+	if faction_is_human("wh2_main_hef_yvresse") == false then
+		transfer_region("wh_main_massif_orcal_massif_orcal", "wh2_dlc15_grn_broken_axe", false);
+	end
+	
+	-- peace between brettonia and skullsmasherz
+	force_peace("wh_main_brt_bretonnia", "wh_main_grn_skullsmasherz", false);
+	
+	-- peace between lyoness and cotheque
+	force_peace("wh_main_brt_lyonesse", "wh2_main_hef_cothique", false);
+	
+	-- peace between baston and zeffin
+	force_peace("wh_main_brt_bastonne", "wh_main_dwf_karak_ziflin", false);
 end;
 
 local function change_southern_realms()
+	-- peace between border princes and bloody hands
+	force_peace("wh_main_teb_border_princes", "wh_main_grn_orcs_of_the_bloody_hand", true);
+	
+	-- war between estalia and dread fleet
+	force_war("wh2_dlc11_cst_noctilus", "wh_main_teb_estalia", false);
+	
 end;
 
 local function change_norsca()
+	-- confed wulfrik with skaeling
+	confed("wh_dlc08_nor_norsca", "wh_main_nor_skaeling", false);
+	
+	-- confed wintetooth with nagralflings
+	confed("wh_dlc08_nor_wintertooth", "wh_dlc08_nor_naglfarlings", false);
+	
+	-- war wintertooth and kislev
+	force_war("wh_dlc08_nor_wintertooth", "wh_main_ksl_kislev", false);
+	
+	-- give citadel of led, konquata and vanheimlings to skeggi
+	if faction_is_human("wh2_dlc13_lzd_spirits_of_the_jungle") == false then
+		transfer_region("wh2_main_albion_citadel_of_lead", "wh2_main_nor_skeggi", false);
+		transfer_region("wh2_main_albion_albion", "wh2_main_nor_skeggi", false);
+		transfer_region("wh2_main_albion_isle_of_wights", "wh2_main_nor_skeggi", false);
+	end
+	
 end;
 
 local function change_ulthuan()
+	-- war between tyrion and scourge of khain
+	force_war("wh2_main_hef_eataine", "wh2_main_def_scourge_of_khaine", false);
+	
+	-- war alith anar with scourge of khain
+	force_war("wh2_main_hef_nagarythe", "wh2_main_def_scourge_of_khaine", false);
+	
+	-- confed loremaster with sappherie
+	confed("wh2_main_hef_order_of_loremasters", "wh2_main_hef_saphery", false);
+	
+	-- confed knights of caledor with caledor
+	confed("wh2_dlc15_hef_imrik", "wh2_main_hef_caledor", false);
 end;
 
 local function change_lustria()
+	-- confed pest with fester and mangi
+	if faction_is_human("wh2_main_lzd_itza") == false and faction_is_human("wh2_dlc12_lzd_cult_of_sotek") == false and faction_is_human("wh2_dlc11_def_the_blessed_dread") == false and faction_is_human("wh2_main_hef_order_of_loremasters") == false and faction_is_human("wh2_dlc11_cst_vampire_coast") == false then
+		confed("wh2_main_skv_clan_pestilens", "wh2_dlc12_skv_clan_fester", false);
+	end
+	if faction_is_human("wh2_dlc13_emp_the_huntmarshals_expedition") == false and faction_is_human("wh2_main_lzd_itza") == false and faction_is_human("wh2_dlc13_lzd_spirits_of_the_jungle") == false then
+		confed("wh2_main_skv_clan_pestilens", "wh2_dlc12_skv_clan_mange", false);
+	end
+	
+	-- war markus and nakai
+	force_war("wh2_dlc13_lzd_spirits_of_the_jungle", "wh2_dlc13_emp_the_huntmarshals_expedition", false);
+	
+	-- war drowned with tiranoc
+	force_war("wh2_dlc11_cst_the_drowned", "wh2_main_hef_tiranoc", false);
+	
+	-- war teclis and felheart
+	force_war("wh2_dlc11_def_the_blessed_dread", "wh2_main_hef_order_of_loremasters", false);
 end;
 
 local function change_naggaroth()
+	-- confed blessed dread with kar karond
+	confed("wh2_dlc11_def_the_blessed_dread", "wh2_main_def_karond_kar", false);
+	
+	-- confed morathi with ghrond
+	if faction_is_human("wh2_main_def_har_ganeth") == false then
+		confed("wh2_main_def_cult_of_pleasure", "wh2_main_def_ghrond", false);
+	end
+	
+	-- give spite reach to har ganeth
+	transfer_region("wh2_main_the_road_of_skulls_spite_reach", "wh2_main_def_har_ganeth", false);
+	
+	-- giive har garef to malus
+	transfer_region("wh2_main_the_black_flood_hag_graef", "wh2_main_def_hag_graef", false);
 end;
 
+local function battle_8_peaks()
+	-- angrund, mors and skarsnik at war with no peace
+	force_war("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", true);
+	force_war("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", true);
+	force_no_peace("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", false);
+	force_no_peace("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", false);
+	force_no_peace("wh_main_grn_crooked_moon", "wh_main_dwf_karak_izor", false);
+end
+
+local function pyramid_of_nagash()
+	-- war between arkhan and sentinels with no peace
+	force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
+	force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
+	
+	-- war between mannfred and sentinels with no peace
+	force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
+	force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
+	
+	-- war between noctlus and sentinels with no peace
+	force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
+	force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
+	
+	-- war between luthor and sentinels with no peace
+	force_war("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_the_sentinels", false);
+	force_no_peace("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_the_sentinels", false);
+	
+	-- settra and khatep cant control pyramid
+	force_no_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_the_sentinels", false);
+	force_no_war("wh2_dlc09_tmb_exiles_of_nehek", "wh2_dlc09_tmb_the_sentinels", false);
+	
+	-- unholly alliance can't attack each other
+	force_no_war("wh2_dlc09_tmb_followers_of_nagash", "wh_main_vmp_vampire_counts", false);
+	force_no_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc11_cst_noctilus", false);
+	force_no_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc11_cst_vampire_coast", false);
+	force_no_war("wh2_dlc09_tmb_followers_of_nagash", "wh_main_vmp_schwartzhafen", false);
+	force_no_war("wh_main_vmp_vampire_counts", "wh2_dlc11_cst_noctilus", false);
+	force_no_war("wh_main_vmp_vampire_counts", "wh2_dlc11_cst_vampire_coast", false);
+	force_no_war("wh_main_vmp_vampire_counts", "wh_main_vmp_schwartzhafen", false);
+	force_no_war("wh2_dlc11_cst_noctilus", "wh2_dlc11_cst_vampire_coast", false);
+	force_no_war("wh2_dlc11_cst_noctilus", "wh_main_vmp_schwartzhafen", false);
+	force_no_war("wh_main_vmp_schwartzhafen", "wh2_dlc11_cst_vampire_coast", false);
+end
+
+function apply_iconic_conflicts()
+	battle_8_peaks();
+	
+	pyramid_of_nagash();
+	
+	-- queen and the crone
+	force_war("wh2_main_def_har_ganeth", "wh2_main_hef_avelorn", true);
+	force_no_peace("wh2_main_def_har_ganeth", "wh2_main_hef_avelorn", false);
+	
+	-- eltharion war with mannfred and nagash
+	force_war("wh2_main_hef_yvresse", "wh_main_vmp_vampire_counts", true);
+	force_no_peace("wh2_main_hef_yvresse", "wh_main_vmp_vampire_counts", false);
+	force_war("wh2_main_hef_yvresse", "wh2_dlc09_tmb_followers_of_nagash", true);
+	force_no_peace("wh2_main_hef_yvresse", "wh2_dlc09_tmb_followers_of_nagash", false);
+	
+	-- eltharion war with grom
+	force_no_peace("wh2_main_hef_yvresse", "wh2_dlc15_grn_broken_axe", false);
+	
+	-- tyrion war with malekith
+	force_war("wh2_main_def_naggarond", "wh2_main_hef_eataine", true);
+	force_no_peace("wh2_main_def_naggarond", "wh2_main_hef_eataine", false);
+	
+	-- war pest with hexoatl, spirit jungle and tehenwin
+	force_war("wh2_main_lzd_hexoatl", "wh2_main_skv_clan_pestilens", false);
+	force_no_peace("wh2_main_lzd_hexoatl", "wh2_main_skv_clan_pestilens", false);
+	force_war("wh2_dlc12_lzd_cult_of_sotek", "wh2_main_skv_clan_pestilens", false);
+	force_no_peace("wh2_dlc12_lzd_cult_of_sotek", "wh2_main_skv_clan_pestilens", false);
+	force_war("wh2_dlc13_lzd_spirits_of_the_jungle", "wh2_main_skv_clan_pestilens", false);
+	force_no_peace("wh2_dlc13_lzd_spirits_of_the_jungle", "wh2_main_skv_clan_pestilens", false);
+	force_war("wh2_main_lzd_itza", "wh2_main_skv_clan_pestilens", false);
+	force_no_peace("wh2_main_lzd_itza", "wh2_main_skv_clan_pestilens", false);
+	
+	-- no peace between luthor and mutaneers
+	force_no_peace("wh2_dlc11_cst_vampire_coast", "wh2_dlc11_cst_vampire_coast_rebels", false);
+	
+	-- malekith and morathi don't fight
+	force_no_war("wh2_main_def_naggarond", "wh2_main_def_cult_of_pleasure", false);
+	
+	-- tyrion, eltharion, teclis and everqueen don't fight each other
+	force_no_war("wh2_main_hef_eataine", "wh2_main_hef_avelorn", false);
+	force_no_war("wh2_main_hef_eataine", "wh2_main_hef_yvresse", false);
+	force_no_war("wh2_main_hef_eataine", "wh2_main_hef_order_of_loremasters", false);
+	force_no_war("wh2_main_hef_avelorn", "wh2_main_hef_yvresse", false);
+	force_no_war("wh2_main_hef_avelorn", "wh2_main_hef_order_of_loremasters", false);
+	force_no_war("wh2_main_hef_order_of_loremasters", "wh2_main_hef_yvresse", false);
+	
+	-- karl, gelt and toddy dont fight
+	force_no_war("wh_main_emp_empire", "wh_main_emp_middenland", false);
+	force_no_war("wh_main_emp_empire", "wh2_dlc13_emp_golden_order", false);
+	force_no_war("wh_main_emp_middenland", "wh2_dlc13_emp_golden_order", false);
+	
+	-- mazda, sotek , nakai, itza don't fight	
+	force_no_war("wh2_main_lzd_hexoatl", "wh2_dlc12_lzd_cult_of_sotek", false);
+	force_no_war("wh2_main_lzd_hexoatl", "wh2_dlc13_lzd_spirits_of_the_jungle", false);
+	force_no_war("wh2_main_lzd_hexoatl", "wh2_main_lzd_itza", false);
+	force_no_war("wh2_dlc12_lzd_cult_of_sotek", "wh2_dlc13_lzd_spirits_of_the_jungle", false);
+	force_no_war("wh2_dlc12_lzd_cult_of_sotek", "wh2_main_lzd_itza", false);
+	force_no_war("wh2_main_lzd_itza", "wh2_dlc13_lzd_spirits_of_the_jungle", false);
+	
+	-- grimgor, skarsnik and wuzzag can't fight each other
+	force_no_war("wh_main_grn_greenskins", "wh_main_grn_crooked_moon", false);
+	force_no_war("wh_main_grn_greenskins", "wh_main_grn_orcs_of_the_bloody_hand", false);
+	force_no_war("wh_main_grn_crooked_moon", "wh_main_grn_orcs_of_the_bloody_hand", false);
+	
+	-- khemri, khalida and exiles dont fight
+	force_no_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_lybaras", false);
+	force_no_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_exiles_of_nehek", false);
+	force_no_war("wh2_dlc09_tmb_lybaras", "wh2_dlc09_tmb_exiles_of_nehek", false);
+	
+end;
 
 local function change_mortal_empires()
 	change_badlands();
@@ -160,6 +399,7 @@ local function change_mortal_empires()
 	change_ulthuan();
 	change_lustria();
 	change_naggaroth();
+	apply_iconic_conflicts();
 end
 
 function loreful_diplomacy_changes()
