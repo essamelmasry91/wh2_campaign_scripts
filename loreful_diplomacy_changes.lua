@@ -381,6 +381,7 @@ function apply_iconic_conflicts()
 end;
 
 local function change_mortal_empires()
+	core:remove_listener("character_completed_battle_greenskin_confederation_dilemma");
 	change_badlands();
 	change_nehekhara();
 	change_southlands();
