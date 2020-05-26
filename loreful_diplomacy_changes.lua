@@ -129,13 +129,7 @@ local function change_nehekhara()
 end
 
 local function change_southlands()
-	if faction_is_human("wh2_main_lzd_tlaqua") == false then
-		-- confed hexoatl with defenders
-		confed("wh2_main_lzd_hexoatl", "wh2_main_lzd_last_defenders", false);
-		
-		-- war hexoatl with mordkin
-		force_war("wh2_main_lzd_hexoatl", "wh2_main_skv_clan_mordkin", false);
-	end
+	
 end;
 
 local function change_darklands()
@@ -267,9 +261,6 @@ local function change_naggaroth()
 	
 	-- give spite reach to har ganeth
 	transfer_region("wh2_main_the_road_of_skulls_spite_reach", "wh2_main_def_har_ganeth", false);
-	
-	-- giive har garef to malus
-	transfer_region("wh2_main_the_black_flood_hag_graef", "wh2_main_def_hag_graef", false);
 end;
 
 local function battle_8_peaks()
@@ -383,6 +374,9 @@ function apply_iconic_conflicts()
 	force_no_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_lybaras", false);
 	force_no_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_exiles_of_nehek", false);
 	force_no_war("wh2_dlc09_tmb_lybaras", "wh2_dlc09_tmb_exiles_of_nehek", false);
+	
+	-- wintertooth and world walker dont fight
+	force_no_war("wh_dlc08_nor_norsca", "wh_dlc08_nor_wintertooth", false);
 	
 end;
 
