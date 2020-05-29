@@ -90,42 +90,35 @@ local function transfer_region(region, faction, apply_to_player)
 end;
 
 local function change_badlands()
-	-- give 8 peaks to skarsnik
-	confed("wh_main_grn_crooked_moon", "wh_main_grn_necksnappers", false);
+
+	-- war wuzzag and top knotz
+	force_war("wh_main_grn_orcs_of_the_bloody_hand", "wh_main_grn_top_knotz", false);
 	
 	-- war between top knotz and teef snatchaz
 	if faction_is_human("wh_main_grn_orcs_of_the_bloody_hand") == false then
 		force_war("wh_main_grn_top_knotz", "wh_main_grn_teef_snatchaz", false);
 	end
-	
-	-- give marshes of madness to vampire counts // not lyonesse
-	if faction_is_human("wh2_dlc14_brt_chevaliers_de_lyonesse") == false then
-        confed("wh_main_vmp_vampire_counts", "wh2_main_vmp_strygos_empire", false);
-    end 
 end
 
 local function change_nehekhara()
 	-- peace between khemri and top knotz
 	force_peace("wh2_dlc09_tmb_khemri", "wh_main_grn_top_knotz", false);
 	
-	-- peace between khemri and arkhan
-	force_peace("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_followers_of_nagash", false);
-	
 	-- give zandri to khmeri // not lyoness
 	if faction_is_human("wh2_dlc14_brt_chevaliers_de_lyonesse") == false then
 		transfer_region("wh2_main_land_of_the_dead_zandri", "wh2_dlc09_tmb_khemri", false);
 	end
 	
-	-- war between khemri and Necrarch and Numas
+	-- war between khemri and Necrarch and Numas and dune kingdoms
 	force_war("wh2_dlc09_tmb_khemri", "wh2_main_vmp_necrarch_brotherhood", false);
-	force_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_numas", false);	
+	force_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_numas", false);
+	force_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_dune_kingdoms", false);		
 	
 	-- war between arkhan and rakaph
 	force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_rakaph_dynasty", false);
 	
 	-- war between lyoness and arkhan
-	force_war("wh2_dlc14_brt_chevaliers_de_lyonesse", "wh2_dlc09_tmb_followers_of_nagash", false);
-	
+	force_war("wh2_dlc14_brt_chevaliers_de_lyonesse", "wh2_dlc09_tmb_followers_of_nagash", false);	
 end
 
 local function change_southlands()
@@ -141,6 +134,10 @@ local function change_darklands()
 		transfer_region("wh2_main_the_broken_teeth_desolation_of_nagash", "wh2_dlc09_tmb_followers_of_nagash", false);
 		transfer_region("wh2_main_the_broken_teeth_nagashizar", "wh2_dlc09_tmb_followers_of_nagash", false);
 	end
+	
+	-- war grimgor vs imrik and rictus
+	force_war("wh_main_grn_greenskins", "wh2_dlc15_hef_imrik", false);
+	force_war("wh_main_grn_greenskins", "wh2_dlc09_skv_clan_rictus", false);
 end;
 
 local function change_worlds_edge_mountains()
@@ -152,15 +149,13 @@ local function change_worlds_edge_mountains()
 	
 	-- peace between dwarfs and bloody hands
 	force_peace("wh_main_dwf_dwarfs", "wh_main_grn_orcs_of_the_bloody_hand", true);
+	
+	-- war dwarfs and red eye
+	force_war("wh_main_dwf_dwarfs", "wh_main_grn_red_eye", false);
+	
 end;
 
 local function change_the_empire()
-	-- peace between empire and skullsmasherz
-	force_peace("wh_main_emp_empire", "wh_main_grn_skullsmasherz", false);
-	
-	-- peace between empire and beastmen
-	force_peace("wh_main_emp_empire", "wh_dlc03_bst_beastmen", true);
-	
 	-- peace between vlad and averland
 	force_peace("wh_main_vmp_schwartzhafen", "wh_main_emp_averland", true);
 	
@@ -172,6 +167,9 @@ local function change_the_empire()
 	
 	-- peace between vc and stirland
 	force_peace("wh_main_vmp_vampire_counts", "wh_main_emp_stirland", true);
+	
+	-- norsca war with nordland
+	force_war("wh_dlc08_nor_norsca", "wh_main_emp_nordland", false);
 end;
 
 local function change_britonnia()
@@ -192,10 +190,6 @@ end;
 local function change_southern_realms()
 	-- peace between border princes and bloody hands
 	force_peace("wh_main_teb_border_princes", "wh_main_grn_orcs_of_the_bloody_hand", true);
-	
-	-- war between estalia and dread fleet
-	force_war("wh2_dlc11_cst_noctilus", "wh_main_teb_estalia", false);
-	
 end;
 
 local function change_norsca()
@@ -205,16 +199,9 @@ local function change_norsca()
 	-- confed wintetooth with nagralflings
 	confed("wh_dlc08_nor_wintertooth", "wh_dlc08_nor_naglfarlings", false);
 	
-	-- war wintertooth and kislev
+	-- war wintertooth and kislev + kraka drak
 	force_war("wh_dlc08_nor_wintertooth", "wh_main_ksl_kislev", false);
-	
-	-- give citadel of led, konquata and vanheimlings to skeggi
-	if faction_is_human("wh2_dlc13_lzd_spirits_of_the_jungle") == false then
-		transfer_region("wh2_main_albion_citadel_of_lead", "wh2_main_nor_skeggi", false);
-		transfer_region("wh2_main_albion_albion", "wh2_main_nor_skeggi", false);
-		transfer_region("wh2_main_albion_isle_of_wights", "wh2_main_nor_skeggi", false);
-	end
-	
+	force_war("wh_dlc08_nor_wintertooth", "wh_main_dwf_kraka_drak", false);	
 end;
 
 local function change_ulthuan()
@@ -227,24 +214,13 @@ local function change_ulthuan()
 	-- confed loremaster with sappherie
 	confed("wh2_main_hef_order_of_loremasters", "wh2_main_hef_saphery", false);
 	
-	-- confed knights of caledor with caledor
-	confed("wh2_dlc15_hef_imrik", "wh2_main_hef_caledor", false);
+	-- peace between noct and caledor
+	force_peace("wh2_dlc11_cst_noctilus", "wh2_main_hef_caledor", true);	
 end;
 
 local function change_lustria()
-	-- confed pest with fester and mangi
-	if faction_is_human("wh2_main_lzd_itza") == false and faction_is_human("wh2_dlc12_lzd_cult_of_sotek") == false and faction_is_human("wh2_dlc11_def_the_blessed_dread") == false and faction_is_human("wh2_main_hef_order_of_loremasters") == false and faction_is_human("wh2_dlc11_cst_vampire_coast") == false then
-		confed("wh2_main_skv_clan_pestilens", "wh2_dlc12_skv_clan_fester", false);
-	end
-	if faction_is_human("wh2_dlc13_emp_the_huntmarshals_expedition") == false and faction_is_human("wh2_main_lzd_itza") == false and faction_is_human("wh2_dlc13_lzd_spirits_of_the_jungle") == false then
-		confed("wh2_main_skv_clan_pestilens", "wh2_dlc12_skv_clan_mange", false);
-	end
-	
 	-- war markus and nakai
 	force_war("wh2_dlc13_lzd_spirits_of_the_jungle", "wh2_dlc13_emp_the_huntmarshals_expedition", false);
-	
-	-- war drowned with tiranoc
-	force_war("wh2_dlc11_cst_the_drowned", "wh2_main_hef_tiranoc", false);
 	
 	-- war teclis and felheart
 	force_war("wh2_dlc11_def_the_blessed_dread", "wh2_main_hef_order_of_loremasters", false);
@@ -257,10 +233,9 @@ local function change_naggaroth()
 	-- confed morathi with ghrond
 	if faction_is_human("wh2_main_def_har_ganeth") == false then
 		confed("wh2_main_def_cult_of_pleasure", "wh2_main_def_ghrond", false);
+		-- give spite reach to har ganeth
+		transfer_region("wh2_main_the_road_of_skulls_spite_reach", "wh2_main_def_har_ganeth", false);
 	end
-	
-	-- give spite reach to har ganeth
-	transfer_region("wh2_main_the_road_of_skulls_spite_reach", "wh2_main_def_har_ganeth", false);
 end;
 
 local function battle_8_peaks()
@@ -270,9 +245,31 @@ local function battle_8_peaks()
 	force_no_peace("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", false);
 	force_no_peace("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", false);
 	force_no_peace("wh_main_grn_crooked_moon", "wh_main_dwf_karak_izor", false);
+
+	-- give 8 peaks to skarsnik
+	confed("wh_main_grn_crooked_moon", "wh_main_grn_necksnappers", false);
+	force_war("wh_main_grn_crooked_moon", "wh2_dlc15_skv_clan_volkn", false);
+	
+	-- peace skarsnik with norn
+	force_peace("wh_main_grn_crooked_moon", "wh_main_dwf_karak_norn", true);
+	
+	-- war queek with aracnos
+	force_war("wh2_main_skv_clan_mors", "wh2_main_grn_arachnos", false);
+	
 end
 
 local function pyramid_of_nagash()
+	-- war manny, noct and arkhan vs settra
+	if faction_is_human("wh_main_vmp_vampire_counts") == false then
+		force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", true);
+	end
+	if faction_is_human("wh2_dlc11_cst_noctilus") == false then
+		force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", true);
+	end	
+	force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", false);
+	force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_khemri", false);
+	force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", false);
+	
 	-- war between arkhan and sentinels with no peace
 	force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
 	force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
@@ -284,10 +281,6 @@ local function pyramid_of_nagash()
 	-- war between noctlus and sentinels with no peace
 	force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
 	force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
-	
-	-- war between luthor and sentinels with no peace
-	force_war("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_the_sentinels", false);
-	force_no_peace("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_the_sentinels", false);
 	
 	-- settra and khatep cant control pyramid
 	force_no_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_the_sentinels", false);
@@ -306,7 +299,7 @@ local function pyramid_of_nagash()
 	force_no_war("wh_main_vmp_schwartzhafen", "wh2_dlc11_cst_vampire_coast", false);
 end
 
-function apply_iconic_conflicts()
+local function apply_iconic_conflicts()
 	battle_8_peaks();
 	
 	pyramid_of_nagash();
@@ -315,18 +308,18 @@ function apply_iconic_conflicts()
 	force_war("wh2_main_def_har_ganeth", "wh2_main_hef_avelorn", true);
 	force_no_peace("wh2_main_def_har_ganeth", "wh2_main_hef_avelorn", false);
 	
-	-- eltharion war with mannfred and nagash
-	force_war("wh2_main_hef_yvresse", "wh_main_vmp_vampire_counts", true);
-	force_no_peace("wh2_main_hef_yvresse", "wh_main_vmp_vampire_counts", false);
-	force_war("wh2_main_hef_yvresse", "wh2_dlc09_tmb_followers_of_nagash", true);
-	force_no_peace("wh2_main_hef_yvresse", "wh2_dlc09_tmb_followers_of_nagash", false);
-	
 	-- eltharion war with grom
 	force_no_peace("wh2_main_hef_yvresse", "wh2_dlc15_grn_broken_axe", false);
 	
-	-- tyrion war with malekith
+	-- tyrion and teclis war with malekith and morathi
 	force_war("wh2_main_def_naggarond", "wh2_main_hef_eataine", true);
 	force_no_peace("wh2_main_def_naggarond", "wh2_main_hef_eataine", false);
+	force_war("wh2_main_def_cult_of_pleasure", "wh2_main_hef_eataine", true);
+	force_no_peace("wh2_main_def_cult_of_pleasure", "wh2_main_hef_eataine", false);
+	force_war("wh2_main_def_naggarond", "wh2_main_hef_order_of_loremasters", true);
+	force_no_peace("wh2_main_def_naggarond", "wh2_main_hef_order_of_loremasters", false);
+	force_war("wh2_main_def_cult_of_pleasure", "wh2_main_hef_order_of_loremasters", true);
+	force_no_peace("wh2_main_def_cult_of_pleasure", "wh2_main_hef_order_of_loremasters", false);
 	
 	-- war pest with hexoatl, spirit jungle and tehenwin
 	force_war("wh2_main_lzd_hexoatl", "wh2_main_skv_clan_pestilens", false);
