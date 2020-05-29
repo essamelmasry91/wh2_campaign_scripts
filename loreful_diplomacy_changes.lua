@@ -10,6 +10,47 @@
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 
+core:add_listener(
+	"nayran_character_completed_battle_greenskin_confederation_dilemma",
+	"CharacterCompletedBattle",
+	true,
+	function(context)
+		local character = context:character();
+		
+		if character:won_battle() == true and character:faction():subculture() == greenskin then
+			local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
+			local enemy_count = #enemies;
+			
+			if context:pending_battle():night_battle() == true or context:pending_battle():ambush_battle() == true then
+				enemy_count = 1;
+			end
+
+			local character_cqi = character:command_queue_index();
+			local attacker_cqi, attacker_force_cqi, attacker_name = cm:pending_battle_cache_get_attacker(1);
+			local defender_cqi, defender_force_cqi, defender_name = cm:pending_battle_cache_get_defender(1);
+			
+			if character_cqi == attacker_cqi or character_cqi == defender_cqi then
+				for i = 1, enemy_count do
+					local enemy = enemies[i];
+					
+					if enemy ~= nil and enemy:is_null_interface() == false and enemy:is_faction_leader() == true and enemy:faction():subculture() == greenskin then
+						if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
+							if character:faction():is_human() == true and enemy:faction():is_human() == false and enemy:faction():is_dead() == false then
+								-- Trigger dilemma to offer confederation
+								GREENSKIN_CONFEDERATION_PLAYER = character:faction():name();
+								cm:trigger_dilemma(GREENSKIN_CONFEDERATION_PLAYER, GREENSKIN_CONFEDERATION_DILEMMA..enemy:faction():name());
+								--Play_Norsca_Advice("dlc08.camp.advice.nor.confederation.001", norsca_info_text_confederation);
+							end
+						end
+					end
+				end
+			end
+		end
+	end,
+	true
+);
+
+
 --# assume faction_is_human: method(faction: string)
 local function faction_is_human(faction)
 	return cm:get_faction(faction):is_human();
