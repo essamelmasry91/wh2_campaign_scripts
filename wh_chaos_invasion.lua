@@ -26,8 +26,8 @@ local ci_late_game_imperium = 10;
 
 -- turn number to force the Chaos Invasion to trigger if the player has not hit the required imperium level. Also works for autoruns where there is no player
 -- values here that are non-numeric now disable the relevant timeout
-local ci_mid_game_turn_timeout = 100;
-local ci_late_game_turn_timeout = 150;
+local ci_mid_game_turn_timeout = 80;
+local ci_late_game_turn_timeout = 120;
 
 if test_chaos_invasion_events then
 	ci_mid_game_turn_timeout = 3;
@@ -80,15 +80,29 @@ local ci_loc_details = {
 local ci_archaon_forename = "names_name_2147343903";
 
 local ci_chaos_horde_buildings = {
-	"wh_main_horde_chaos_settlement_3",
-	"wh_main_horde_chaos_warriors_2",
-	"wh_main_horde_chaos_forge_1"
+	"wh_main_horde_chaos_settlement_5",
+	"wh_main_horde_chaos_warriors_3",
+	"wh_main_horde_chaos_trolls_1",
+	"wh_main_horde_chaos_magic_2",
+	"wh_main_horde_chaos_marauders_3",
+	"wh_main_horde_chaos_giants_1",
+	"wh_main_horde_chaos_knights_2",
+	"wh_main_horde_chaos_weapons_2",
+	"wh_main_horde_chaos_dragon_ogres_2",
+	"wh_main_horde_chaos_forge_2"
 };
 
 local ci_beastmen_horde_buildings = {
-	"wh_dlc03_horde_beastmen_herd_3",
-	"wh_dlc03_horde_beastmen_gors_3",
-	"wh_dlc03_horde_beastmen_minotaurs_1"
+	"wh_dlc03_horde_beastmen_herd_5",
+	"wh_dlc03_horde_beastmen_gors_4",
+	"wh_dlc03_horde_beastmen_minotaurs_3",
+	"wh_dlc03_horde_beastmen_centigors_3",
+	"wh_dlc03_horde_beastmen_giants_1",
+	"wh_dlc03_horde_beastmen_ruination_2",
+	"wh_dlc03_horde_beastmen_weapons_2",
+	"wh_dlc03_horde_beastmen_creatures_3",
+	"wh_dlc03_horde_beastmen_razorgors_2",
+	"wh_dlc03_horde_beastmen_arcane_2"
 };
 
 function ci_setup()
