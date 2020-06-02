@@ -131,9 +131,6 @@ local function transfer_region(region, faction, apply_to_player)
 end;
 
 local function change_badlands()
-
-	-- war wuzzag and top knotz
-	force_war("wh_main_grn_orcs_of_the_bloody_hand", "wh_main_grn_top_knotz", false);
 	
 	-- war between top knotz and teef snatchaz
 	if faction_is_human("wh_main_grn_orcs_of_the_bloody_hand") == false then
@@ -200,11 +197,8 @@ local function change_the_empire()
 	-- peace between vlad and averland
 	force_peace("wh_main_vmp_schwartzhafen", "wh_main_emp_averland", true);
 	
-	-- give vlad templehof and oberstyre //  not vc
-	if faction_is_human("wh_main_vmp_vampire_counts") == false then
-		transfer_region("wh_main_western_sylvania_castle_templehof", "wh_main_vmp_schwartzhafen", false);
-		transfer_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_schwartzhafen", false);
-	end
+	-- confed vc with vlad
+	confed("wh_main_vmp_vampire_counts", "wh_main_vmp_schwartzhafen", false);
 	
 	-- peace between vc and stirland
 	force_peace("wh_main_vmp_vampire_counts", "wh_main_emp_stirland", true);
