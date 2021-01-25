@@ -70,8 +70,7 @@ CI_CHAOS_AGENTS = {
 CI_CHAOS_ARMY_SPAWNS = {
 	faction_key = "wh_main_chs_chaos",
 	effect_bundle = "wh_main_bundle_military_upkeep_free_force",
-	buildings = {"wh_main_horde_chaos_settlement_3", "wh_main_horde_chaos_warriors_2", "wh_main_horde_chaos_forge_1"},
-	--buildings = {"wh_main_horde_chaos_settlement_5",	"wh_main_horde_chaos_warriors_3", "wh_main_horde_chaos_trolls_1", "wh_main_horde_chaos_magic_2", "wh_main_horde_chaos_knights_2", "wh_main_horde_chaos_dragon_ogres_2", "wh_main_horde_chaos_giants_1", "wh_main_horde_chaos_marauders_3"},
+	buildings = {"wh_main_horde_chaos_settlement_5", "wh_main_horde_chaos_warriors_3", "wh_main_horde_chaos_trolls_1", "wh_main_horde_chaos_magic_2", "wh_main_horde_chaos_knights_2", "wh_main_horde_chaos_dragon_ogres_2", "wh_main_horde_chaos_giants_1", "wh_main_horde_chaos_marauders_3", "wh_main_horde_chaos_forge_2", "wh_main_horde_chaos_weapons_2"},
 	invasions = {
 		{
 			key = "chaos_wastes",
