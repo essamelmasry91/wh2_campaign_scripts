@@ -10,6 +10,19 @@
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 
+local function heal_garrisons()
+    local faction_list = cm:model():world():faction_list()
+    for i = 0, faction_list:num_items() - 1 do
+        local current_faction = faction_list:item_at(i)
+        local region_list = current_faction:region_list()
+        for i = 0, region_list:num_items() - 1 do
+            local current_region = region_list:item_at(i)
+            local current_region_cqi = current_region:cqi()
+            cm:heal_garrison(current_region_cqi)
+        end
+    end
+end
+
 --# assume faction_is_human: method(faction: string)
 local function faction_is_human(faction)
 	return cm:get_faction(faction):is_human();
@@ -66,7 +79,7 @@ local function confed(confederator, confederated, apply_to_player)
 	end
 end;
 
---# assume transfer_region: method(confederator: string, confederated: string, apply_to_player: boolean)
+--# assume transfer_region: method(region: string, faction: string, apply_to_player: boolean)
 local function transfer_region(region, faction, apply_to_player)
 	local transfer = true;
 	if apply_to_player == true then
@@ -90,6 +103,7 @@ end
 
 local function change_mortal_empires()
 	setup_8_peaks_conflict();
+	heal_garrisons()
 end
 
 function nayran_wh2_campaign_script()
