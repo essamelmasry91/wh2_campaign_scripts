@@ -119,9 +119,9 @@ function add_horde_reemergence_listeners()
 			
 			local roll = cm:random_number(100);
 			
-			if roll <= chance_of_horde_reemerging then
-				attempt_to_spawn_scripted_army(chosen_faction);
-			end;
+			-- if roll <= chance_of_horde_reemerging then
+				-- attempt_to_spawn_scripted_army(chosen_faction);
+			-- end;
 		end,
 		true
 	);
