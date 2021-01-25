@@ -92,7 +92,23 @@ local function transfer_region(region, faction, apply_to_player)
 	end
 end;
 
-local function setup_8_peaks_conflict()
+local function setup_undead_alliance()
+	
+	--#assume player isnt one of those factions
+	
+	-- military alliance between dreadfleet arkhan mannfred lahmia sisterhood and silver host
+	
+	-- defensive alliance between vlad and mannfred
+	
+	-- war on sentinels
+	
+	-- war on khmeri
+	
+	-- war on lybaras
+	
+end
+
+local function setup_8_peaks()
 	-- angrund, mors and crooked moon at war
 	force_war("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", true);
 	force_war("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", true);
@@ -101,9 +117,196 @@ local function setup_8_peaks_conflict()
 	confed("wh_main_grn_crooked_moon", "wh_main_grn_necksnappers", false);	
 end
 
+local function setup_lustria() 
+	
+	-- war felheart and teclis
+	force_war("wh2_dlc11_def_the_blessed_dread", "wh2_main_hef_order_of_loremasters", false);
+	
+	-- confed pestilence with mange
+	
+	-- confed mazda with nakai
+	
+	-- war mazda with wulfheart 
+	
+	-- give pox march to Vampirates
+	
+	-- peace wulfheart blue vipers
+	
+	-- war wulfheart tlaxtlan
+	
+	-- alliance wulfheart with empire
+	
+	-- trade wulfheart with empire
+	
+	-- skeggi trade with vanaheimlings
+	
+	-- new world colonies trade with estalia
+
+end
+
+local function setup_ulthuan()
+	
+	-- confed imrik with caledor
+	
+	-- confed teclis with loremasters
+	
+	-- war alith anar with scourge of khaine
+	
+	-- no war tyrion teclis eltharion alith anar alarielle
+end
+
+local function setup_nagarond()
+	-- confed lokhir with karon kar
+	
+end
+
+local function setup_empire()
+	-- peace empire with skullshmasherz
+	
+	-- war empire with black venom
+	
+	-- war empire skull takerz
+	
+	-- peace angrund skull takerz
+	
+	-- give aarnau to leaf cutterz
+	
+	-- war drycha talabheim
+	
+end
+
+local function setup_norsca()
+
+	-- confed norsca with skaeling
+	
+	-- confed wintertooth with naglafarlings
+	
+	-- war wulfrik with nordland
+	
+	-- war wintertooth with kislev
+	
+end
+
+local function setup_sylvania()
+	--# assume player is not mannfred
+	
+	-- give castle templehof to vlad
+	
+	-- give fort obrion to vlad	
+	
+end
+
+local function setup_bretonia()
+	-- peace wulfric and brettonia
+	
+end
+
+local function setup_nehekhara()
+	-- war repanse with arkhan
+	
+	-- alliance repanse with lyonnaise
+	
+	-- give zandri to khmri
+	
+	-- peace khemri with top knotz
+	
+	-- war khmri with necrath brotherhood
+end
+
+local function setup_badlands()
+	
+	-- confed grom with skull crag
+	
+	-- confed mannfred with strygos empire
+	
+end
+
+local function setup_darklands()
+	-- war malus with imrik
+	
+	-- confed riktus with clan nest
+end
+
+local function setup_worlds_edge_mountains()
+	-- peace karaz-a-karak with white hand
+	
+	-- peace karaz-a-karak with scabey eyes
+	
+	-- peace karaz-a-karak with red fangs
+end
+
+local function setup_player_mazda()
+	--# assume mazda starts with kroq nakai and tiktaktoe
+	
+	-- kill spirit of the jungle characters
+	
+	-- destroy temple of skulls
+	
+	-- kill last defenders characters
+	
+	-- destroy jaluk oasis
+	
+	-- kill tlaqa characters
+	
+end
+
+local function setup_player_tyrion()
+	--# assume tyrion starts with teclis
+	
+	-- destroy star tower
+
+	-- kill order of loremaster characters	
+	
+end
+
+local function setup_player_grimgor()
+	--# assume grimgor starts with wuzzag
+	
+	-- give ekrund to teef snatchaz
+	
+	-- kill white hand characters
+	
+end
+
+local function setup_player_karl()
+	--# assume karl starts with gelt
+	
+	-- give pfeil dorf to black venom
+	
+	-- give fort soll to wissen land
+	
+	-- kill golden order characters
+	
+end
+
+local function setup_player_mannfred()
+	--# assume mannfred starts with vlad
+	
+	-- give shwartzhafen to templehof
+	
+	-- give von carsteins characters
+end
+
 local function change_mortal_empires()
-	setup_8_peaks_conflict();
-	heal_garrisons()
+	setup_undead_alliance();
+	setup_8_peaks();
+	setup_lustria();
+	setup_ulthuan();
+	setup_nagarond();
+	setup_empire();
+	setup_norsca();
+	setup_sylvania();
+	setup_bretonia();
+	setup_nehekhara();
+	setup_badlands();
+	setup_darklands();
+	setup_worlds_edge_mountains();
+	setup_player_mazda();
+	setup_player_tyrion();
+	setup_player_grimgor();
+	setup_player_karl();
+	setup_player_mannfred();
+	heal_garrisons();
 end
 
 function nayran_wh2_campaign_script()
