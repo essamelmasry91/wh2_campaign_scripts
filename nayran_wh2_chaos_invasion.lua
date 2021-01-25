@@ -1,8 +1,8 @@
 CI_DEBUG = false;
 CI_EVENTS = {
 	{key = "INTRO", required_stage = 0, first_turn = 15, last_turn = 25, army_spawns = 0, agent_spawns = 0, chaos_effect = ""},
-	{key = "MID_GAME", required_stage = 1, first_turn = 90, last_turn = 110, army_spawns = 4, agent_spawns = 2, chaos_effect = "rises"}, -- rises
-	{key = "END_GAME", required_stage = 2, first_turn = 140, last_turn = 160, army_spawns = 8, agent_spawns = 4, chaos_effect = ""}, -- invasion
+	{key = "MID_GAME", required_stage = 1, first_turn = 60, last_turn = 70, army_spawns = 4, agent_spawns = 2, chaos_effect = "rises"}, -- rises
+	{key = "END_GAME", required_stage = 2, first_turn = 90, last_turn = 100, army_spawns = 8, agent_spawns = 4, chaos_effect = ""}, -- invasion
 	{key = "VICTORY", required_stage = -1, first_turn = -1, last_turn = -1, army_spawns = 0, agent_spawns = 0, chaos_effect = ""}
 };
 CI_CHAOS_CHARACTERS = {
