@@ -209,13 +209,13 @@ function bst_uprising_player_turn()
 		end;
 
 		if cm:get_saved_value("beastmen_uprising_stage") == 0 then 
-			if 50 < turn_number + cm:random_number(20, 1) then
+			if 50 < turn_number + cm:random_number(20, 10) then
 			--if 3 < turn_number + cm:random_number(1, 1) then
 				announce_bst_uprising();
 				cm:set_saved_value("beastmen_uprising_stage", 1);
 			end;
 		elseif cm:get_saved_value("beastmen_uprising_stage") == 2 then
-			if 150 < turn_number + cm:random_number(50, 1) then
+			if 150 < turn_number + cm:random_number(50, 40) then
 			--if 10 < turn_number + cm:random_number(2, 1) then
 				announce_bst_uprising();
 				cm:set_saved_value("beastmen_uprising_stage", 3);
