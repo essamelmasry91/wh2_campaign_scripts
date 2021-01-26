@@ -10,6 +10,19 @@
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 
+--# assume disable_event_log: method(disable: boolean)
+local function disable_event_log(disable)
+	cm:disable_event_feed_events(disable, "", "", "faction_joins_confederation")
+	cm:disable_event_feed_events(disable, "", "", "diplomacy_faction_encountered")
+	cm:disable_event_feed_events(disable, "", "", "diplomacy_trespassing")
+	cm:disable_event_feed_events(disable, "", "", "conquest_province_secured")
+	cm:disable_event_feed_events(disable, "", "", "conquest_province_contested")
+	cm:disable_event_feed_events(disable, "", "", "faction_resource_lost")
+	cm:disable_event_feed_events(disable, "", "", "conquest_sea_region_controlled")
+	cm:disable_event_feed_events(disable, "", "", "conquest_sea_region_contested")
+	cm:disable_event_feed_events(disable, "", "wh_event_subcategory_character_deaths", "")
+end
+
 --# assume heal_garrison: method(region: string)
 local function heal_garrison(region)
 	local region = cm:get_region(region);
@@ -364,6 +377,8 @@ end
 
 function nayran_wh2_campaign_script()
 	if cm:is_new_game() then
+		disable_event_log(true);
 		change_mortal_empires();
+		disable_event_log(false);
 	end;
 end
