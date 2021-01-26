@@ -32,6 +32,22 @@ local function apply_diplomacy(declarer, declaree, apply_to_player)
 	return apply;
 end;
 
+--# assume force_millitary_alliance: method(proposingFaction: string, targetFaction: string, apply_to_player: boolean)
+local function force_millitary_alliance(proposingFaction, targetFaction, apply_to_player)
+	local force_millitary_alliance = apply_diplomacy(proposingFaction, targetFaction, apply_to_player);
+	if force_millitary_alliance == true then
+		cm:force_alliance(proposingFaction, targetFaction, true);
+	end
+end
+
+--# assume force_defensive_alliance: method(proposingFaction: string, targetFaction: string, apply_to_player: boolean)
+local function force_defensive_alliance(proposingFaction, targetFaction, apply_to_player)
+	local force_defensive_alliance = apply_diplomacy(proposingFaction, targetFaction, apply_to_player);
+	if force_defensive_alliance == true then
+		cm:force_alliance(proposingFaction, targetFaction, false);
+	end
+end
+
 --# assume force_no_peace: method(declarer: string, declaree: string, apply_to_player: boolean)
 local function force_no_peace(declarer, declaree, apply_to_player)
 	local force_no_peace = apply_diplomacy(declarer, declaree, apply_to_player);
@@ -72,8 +88,22 @@ local function confed(confederator, confederated, apply_to_player)
 	end
 end;
 
---# assume transfer_region: method(region: string, faction: string, apply_to_player: boolean)
-local function transfer_region(region, faction, apply_to_player)
+--# assume make_trade_agreement: method(proposingFaction: string, targetFaction: string, apply_to_player: boolean)
+local function make_trade_agreement(proposingFaction, targetFaction, apply_to_player)
+	local make_trade_agreement = apply_diplomacy(proposingFaction, targetFaction, apply_to_player);
+	if make_trade_agreement then
+		cm:force_make_trade_agreement(proposingFaction, targetFaction);
+	end
+end
+
+--# assume set_settlement_level: method(region: string, level: integer, apply_to_player: boolean)
+local function set_settlement_level(region, level, apply_to_player)
+    local settlement = cm:get_region(region):settlement();
+    cm:instantly_set_settlement_primary_slot_level(settlement, level);
+end
+
+--# assume transfer_region: method(region: string, faction: string, level: integer, apply_to_player: boolean)
+local function transfer_region(region, faction, level, apply_to_player)
 	local transfer = true;
 	if apply_to_player == true then
 		if faction_is_human(faction) == true then
@@ -82,9 +112,25 @@ local function transfer_region(region, faction, apply_to_player)
 	end
 	if transfer == true then
 		cm:transfer_region_to_faction(region, faction);
+		if level > 0 then
+			set_settlement_level(region, level, apply_to_player);
+		end
 		heal_garrison(region);
 	end
 end;
+
+--# assume abandon_region: method(region: string, initial_faction: string, apply_to_player: boolean)
+local function abandon_region(region, initial_faction, apply_to_player)
+	local abandon = true;
+	if apply_to_player == true then
+		if faction_is_human(initial_faction) == true then
+			abandon = false;
+		end
+	end
+	if abandon == true then
+		cm:set_region_abandoned(region);
+	end
+end 
 
 local function setup_undead_alliance()
 	
@@ -116,25 +162,39 @@ local function setup_lustria()
 	-- war felheart and teclis
 	force_war("wh2_dlc11_def_the_blessed_dread", "wh2_main_hef_order_of_loremasters", false);
 	
-	-- confed pestilence with mange
+	-- give pox march to vampire coast
+	transfer_region("wh2_main_vampire_coast_pox_marsh", "wh2_dlc11_cst_vampire_coast", 0, false);
+	
+	-- give blood swamps to vampire coast
+	transfer_region("wh2_main_vampire_coast_the_blood_swamps", "wh2_dlc11_cst_vampire_coast", 2, false);	
+	
+	-- give mangrove coast and sabatuun to pest
+	transfer_region("wh2_main_headhunters_jungle_mangrove_coast", "wh2_main_skv_clan_pestilens", 2, false);
+	transfer_region("wh2_main_southern_great_jungle_subatuun", "wh2_main_skv_clan_pestilens", 2, false);
 	
 	-- confed mazda with nakai
+	confed("wh2_main_lzd_hexoatl", "wh2_dlc13_lzd_spirits_of_the_jungle", false);
 	
 	-- war mazda with wulfheart 
-	
-	-- give pox march to Vampirates
+	force_war("wh2_main_lzd_hexoatl", "wh2_dlc13_emp_the_huntmarshals_expedition", false);
 	
 	-- peace wulfheart blue vipers
+	force_peace("wh2_dlc13_emp_the_huntmarshals_expedition", "wh2_main_grn_blue_vipers", true);
+	
+	-- peace mazda blue vipers
+	force_peace("wh2_main_lzd_hexoatl", "wh2_main_grn_blue_vipers", true)
 	
 	-- war wulfheart tlaxtlan
-	
-	-- alliance wulfheart with empire
+	force_war("wh2_dlc13_emp_the_huntmarshals_expedition", "wh2_main_lzd_tlaxtlan", true);
 	
 	-- trade wulfheart with empire
+	make_trade_agreement("wh2_dlc13_emp_the_huntmarshals_expedition", "wh_main_emp_empire", true);
 	
-	-- skeggi trade with vanaheimlings
+	-- skeggi trade with wulfrik
+	make_trade_agreement("wh2_main_nor_skeggi", "wh_dlc08_nor_norsca", true);
 	
 	-- new world colonies trade with estalia
+	make_trade_agreement("wh2_main_emp_new_world_colonies", "wh_main_teb_estalia", true);
 
 end
 
