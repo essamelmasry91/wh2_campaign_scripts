@@ -34,6 +34,17 @@ local function faction_is_human(faction)
 	return cm:get_faction(faction):is_human();
 end
 
+--# assume kill_faction_armies: method(faction_name: string)
+function kill_faction_armies(faction_name)
+	local faction_character_list = cm:get_faction(faction_name):character_list();	
+	for i = 0, faction_character_list:num_items() - 1 do
+		local cur_char = faction_character_list:item_at(i);			
+		if cur_char:is_null_interface() == false then
+			cm:kill_character(cur_char:command_queue_index(), true, true);
+		end
+	end;
+end;
+
 --# assume apply_diplomacy: method(declarer: string, declaree: string, apply_to_player: boolean)
 local function apply_diplomacy(declarer, declaree, apply_to_player)
 	local apply = true;
@@ -255,11 +266,16 @@ local function setup_norsca()
 end
 
 local function setup_sylvania()
-	--# assume player is not mannfred
 	
-	-- give castle templehof to vlad
+	local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
 	
-	-- give fort obrion to vlad	
+	if not player_is_mannfred then
+		-- give castle templehof to vlad
+		transfer_region("wh_main_western_sylvania_castle_templehof", "wh_main_vmp_schwartzhafen", 0, false);
+		
+		-- give fort oberstyre to vlad	
+		transfer_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_schwartzhafen", 0, false);
+	end
 	
 end
 
@@ -348,10 +364,15 @@ end
 
 local function setup_player_mannfred()
 	--# assume mannfred starts with vlad
+	local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
 	
-	-- give shwartzhafen to templehof
-	
-	-- give von carsteins characters
+	if player_is_mannfred then
+		-- give shwartzhafen to templehof
+		transfer_region("wh_main_western_sylvania_schwartzhafen", "wh_main_vmp_rival_sylvanian_vamps", 0, false);
+		
+		-- kill von carsteins characters
+		kill_faction_armies("wh_main_vmp_schwartzhafen");
+	end
 end
 
 local function change_mortal_empires()
@@ -368,11 +389,6 @@ local function change_mortal_empires()
 	setup_badlands();
 	setup_darklands();
 	setup_worlds_edge_mountains();
-	setup_player_mazda();
-	setup_player_tyrion();
-	setup_player_grimgor();
-	setup_player_karl();
-	setup_player_mannfred();
 end
 
 function nayran_wh2_campaign_script()
@@ -382,3 +398,27 @@ function nayran_wh2_campaign_script()
 		disable_event_log(false);
 	end;
 end
+
+core:add_listener(
+	"nayran_extra_setup",
+	"MctFinalized",
+	true,
+	function(context)		
+		local mct = get_mct()
+		local frosty_confeds_mod = mct:get_mod_by_key("frosty_confeds")
+		local settings_table = frosty_confeds_mod:get_settings() 
+		enable_value = settings_table._01_enableorDisable
+
+		if enable_value then
+			cm:callback(function()
+				setup_player_mazda();
+				setup_player_tyrion();
+				setup_player_grimgor();
+				setup_player_karl();
+				setup_player_mannfred();
+			end, 1)
+		end
+		core:remove_listener("frosty_confeds_MctFinalized_done");
+	end,
+	true
+)
