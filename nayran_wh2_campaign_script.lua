@@ -183,14 +183,12 @@ end
 
 local function setup_lustria()
 	
-	local player_is_teclis = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_skrolk = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_felheart = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_luthor = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_gorrok = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_tenehuine = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_nakai = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_wulfheart = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_teclis = faction_is_human("wh2_main_hef_order_of_loremasters");
+	local player_is_skrolk = faction_is_human("wh2_main_skv_clan_pestilens");
+	local player_is_felheart = faction_is_human("wh2_dlc11_def_the_blessed_dread");
+	local player_is_luthor = faction_is_human("wh2_dlc11_cst_vampire_coast");
+	local player_is_gorrok = faction_is_human("wh2_main_lzd_itza");
+	local player_is_tenehuine = faction_is_human("wh2_dlc12_lzd_cult_of_sotek");
 	
 	if not player_is_skrolk and not player_is_teclis and not player_is_gorrok and not player_is_felheart and not player_is_luthor and not player_is_tenehuine then
 		-- war felheart and teclis
