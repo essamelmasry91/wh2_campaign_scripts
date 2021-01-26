@@ -10,17 +10,10 @@
 -----------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 
-local function heal_garrisons()
-    local faction_list = cm:model():world():faction_list()
-    for i = 0, faction_list:num_items() - 1 do
-        local current_faction = faction_list:item_at(i)
-        local region_list = current_faction:region_list()
-        for i = 0, region_list:num_items() - 1 do
-            local current_region = region_list:item_at(i)
-            local current_region_cqi = current_region:cqi()
-            cm:heal_garrison(current_region_cqi)
-        end
-    end
+--# assume heal_garrison: method(region: string)
+local function heal_garrison(region)
+	local region = cm:get_region(region);
+    cm:heal_garrison(region:cqi());
 end
 
 --# assume faction_is_human: method(faction: string)
@@ -89,6 +82,7 @@ local function transfer_region(region, faction, apply_to_player)
 	end
 	if transfer == true then
 		cm:transfer_region_to_faction(region, faction);
+		heal_garrison(region);
 	end
 end;
 
@@ -306,7 +300,6 @@ local function change_mortal_empires()
 	setup_player_grimgor();
 	setup_player_karl();
 	setup_player_mannfred();
-	heal_garrisons();
 end
 
 function nayran_wh2_campaign_script()
