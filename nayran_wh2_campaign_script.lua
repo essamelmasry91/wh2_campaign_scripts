@@ -181,20 +181,31 @@ local function setup_8_peaks()
 	confed("wh_main_grn_crooked_moon", "wh_main_grn_necksnappers", false);	
 end
 
-local function setup_lustria() 
+local function setup_lustria()
 	
-	-- war felheart and teclis
-	force_war("wh2_dlc11_def_the_blessed_dread", "wh2_main_hef_order_of_loremasters", false);
+	local player_is_teclis = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_skrolk = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_felheart = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_luthor = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_gorrok = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_tenehuine = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_nakai = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_wulfheart = faction_is_human("wh_main_vmp_vampire_counts");
 	
-	-- give pox march to vampire coast
-	transfer_region("wh2_main_vampire_coast_pox_marsh", "wh2_dlc11_cst_vampire_coast", 0, false);
-	
-	-- give blood swamps to vampire coast
-	transfer_region("wh2_main_vampire_coast_the_blood_swamps", "wh2_dlc11_cst_vampire_coast", 2, false);	
-	
-	-- give mangrove coast and sabatuun to pest
-	transfer_region("wh2_main_headhunters_jungle_mangrove_coast", "wh2_main_skv_clan_pestilens", 2, false);
-	transfer_region("wh2_main_southern_great_jungle_subatuun", "wh2_main_skv_clan_pestilens", 2, false);
+	if not player_is_skrolk and not player_is_teclis and not player_is_gorrok and not player_is_felheart and not player_is_luthor and not player_is_tenehuine then
+		-- war felheart and teclis
+		force_war("wh2_dlc11_def_the_blessed_dread", "wh2_main_hef_order_of_loremasters", false);
+		
+		-- give pox march to vampire coast
+		transfer_region("wh2_main_vampire_coast_pox_marsh", "wh2_dlc11_cst_vampire_coast", 0, false);
+		
+		-- give blood swamps to vampire coast
+		transfer_region("wh2_main_vampire_coast_the_blood_swamps", "wh2_dlc11_cst_vampire_coast", 2, false);
+		
+		-- give mangrove coast and sabatuun to pest
+		transfer_region("wh2_main_headhunters_jungle_mangrove_coast", "wh2_main_skv_clan_pestilens", 2, false);
+		transfer_region("wh2_main_southern_great_jungle_subatuun", "wh2_main_skv_clan_pestilens", 2, false);
+	end
 	
 	-- confed mazda with nakai
 	confed("wh2_main_lzd_hexoatl", "wh2_dlc13_lzd_spirits_of_the_jungle", false);
@@ -202,23 +213,23 @@ local function setup_lustria()
 	-- war mazda with wulfheart 
 	force_war("wh2_main_lzd_hexoatl", "wh2_dlc13_emp_the_huntmarshals_expedition", false);
 	
-	-- peace wulfheart blue vipers
-	force_peace("wh2_dlc13_emp_the_huntmarshals_expedition", "wh2_main_grn_blue_vipers", true);
+	-- trade wulfheart with empire
+	make_trade_agreement("wh2_dlc13_emp_the_huntmarshals_expedition", "wh_main_emp_empire", false);
 	
-	-- peace mazda blue vipers
-	force_peace("wh2_main_lzd_hexoatl", "wh2_main_grn_blue_vipers", true)
+	-- peace wulfheart blue vipers
+	force_peace("wh2_dlc13_emp_the_huntmarshals_expedition", "wh2_main_grn_blue_vipers", false);
 	
 	-- war wulfheart tlaxtlan
-	force_war("wh2_dlc13_emp_the_huntmarshals_expedition", "wh2_main_lzd_tlaxtlan", true);
+	force_war("wh2_dlc13_emp_the_huntmarshals_expedition", "wh2_main_lzd_tlaxtlan", false);
 	
-	-- trade wulfheart with empire
-	make_trade_agreement("wh2_dlc13_emp_the_huntmarshals_expedition", "wh_main_emp_empire", true);
+	-- peace mazda blue vipers
+	force_peace("wh2_main_lzd_hexoatl", "wh2_main_grn_blue_vipers", false)
 	
 	-- skeggi trade with wulfrik
-	make_trade_agreement("wh2_main_nor_skeggi", "wh_dlc08_nor_norsca", true);
+	make_trade_agreement("wh2_main_nor_skeggi", "wh_dlc08_nor_norsca", false);
 	
 	-- new world colonies trade with estalia
-	make_trade_agreement("wh2_main_emp_new_world_colonies", "wh_main_teb_estalia", true);
+	make_trade_agreement("wh2_main_emp_new_world_colonies", "wh_main_teb_estalia", false);
 
 end
 
