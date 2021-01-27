@@ -48,7 +48,7 @@ end;
 --# assume apply_diplomacy: method(declarer: string, declaree: string, apply_to_player: boolean)
 local function apply_diplomacy(declarer, declaree, apply_to_player)
 	local apply = true;
-	if apply_to_player == true then
+	if apply_to_player == false then
 		if faction_is_human(declarer) == true or faction_is_human(declaree) == true then
 			apply = false;
 		end
