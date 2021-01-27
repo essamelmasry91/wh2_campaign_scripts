@@ -158,24 +158,64 @@ end
 
 local function setup_undead_alliance()
 	
-	--#assume player isnt one of those factions
+	local player_is_arkhan = faction_is_human("wh2_dlc09_tmb_followers_of_nagash");
+	local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_vlad = faction_is_human("wh_main_vmp_schwartzhafen");
+	local player_is_luthor = faction_is_human("wh2_dlc11_cst_vampire_coast");
+	local player_is_dreadfleet = faction_is_human("wh2_dlc11_cst_noctilus");
 	
-	-- military alliance between dreadfleet arkhan mannfred lahmia sisterhood and silver host
-	
-	-- defensive alliance between vlad and mannfred
-	
-	-- war on sentinels
-	
-	-- war on khmeri
-	
-	-- war on lybaras
-	
+	if not player_is_arkhan and not player_is_mannfred and not player_is_vlad and not player_is_luthor and not player_is_dreadfleet then
+		-- war on sentinels
+		force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
+		force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
+		force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
+		force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_the_sentinels", false);
+		force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
+		force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
+		force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
+		force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_the_sentinels", false);
+		
+		-- war on khmeri
+		force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_khemri", false);
+		force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", false);
+		force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", false);
+		force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_khemri", false);
+		force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_khemri", false);
+		force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", false);
+		force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", false);
+		force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_khemri", false);
+		
+		-- war on lybaras
+		force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_lybaras", false);
+		force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_lybaras", false);
+		force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_lybaras", false);
+		force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_lybaras", false);
+		force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_lybaras", false);
+		force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_lybaras", false);
+		force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_lybaras", false);
+		force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_lybaras", false);
+		
+		-- military alliance between dreadfleet arkhan mannfred and lahmia sisterhood
+		force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh_main_vmp_vampire_counts", false);
+		force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc11_cst_noctilus", false);
+		force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc16_vmp_lahmian_sisterhood", false);
+		
+		force_millitary_alliance("wh_main_vmp_vampire_counts", "wh2_dlc11_cst_noctilus", false);
+		force_millitary_alliance("wh_main_vmp_vampire_counts", "wh2_dlc16_vmp_lahmian_sisterhood", false);
+		
+		force_millitary_alliance("wh2_dlc11_cst_noctilus", "wh2_dlc16_vmp_lahmian_sisterhood", false);
+		
+		-- defensive alliance between vlad and mannfred
+		force_defensive_alliance("wh_main_vmp_vampire_counts", "wh_main_vmp_schwartzhafen", false);
+	end
 end
 
 local function setup_8_peaks()
 	-- angrund, mors and crooked moon at war
 	force_war("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", true);
 	force_war("wh2_main_skv_clan_mors", "wh_main_dwf_karak_izor", true);
+	force_no_peace("wh_main_dwf_karak_izor", "wh_main_grn_crooked_moon", false);
+	force_no_peace("wh_main_dwf_karak_izor", "wh2_main_skv_clan_mors", false);
 
 	-- give 8 peaks to skarsnik
 	confed("wh_main_grn_crooked_moon", "wh_main_grn_necksnappers", false);	
@@ -234,17 +274,31 @@ end
 local function setup_ulthuan()
 	
 	-- confed imrik with caledor
+	confed("wh2_dlc15_hef_imrik", "wh2_main_hef_caledor", false);
 	
 	-- confed teclis with loremasters
+	confed("wh2_main_hef_order_of_loremasters", "wh2_main_hef_saphery", false);
 	
 	-- war alith anar with scourge of khaine
+	force_war("wh2_main_hef_nagarythe", "wh2_main_def_scourge_of_khaine", false);
 	
-	-- no war tyrion teclis eltharion alith anar alarielle
+	-- no war tyrion teclis eltharion alarielle
+	force_no_war("wh2_main_hef_high_elves", "wh2_main_hef_avelorn", false);
+	force_no_war("wh2_main_hef_high_elves", "wh2_main_hef_order_of_loremasters", false);
+	force_no_war("wh2_main_hef_high_elves", "wh2_main_hef_yvresse", false);
+	
+	force_no_war("wh2_main_hef_avelorn", "wh2_main_hef_order_of_loremasters", false);
+	force_no_war("wh2_main_hef_avelorn", "wh2_main_hef_yvresse", false);
+	
+	force_no_war("wh2_main_hef_order_of_loremasters", "wh2_main_hef_yvresse", false);
 end
 
 local function setup_nagarond()
 	-- confed lokhir with karon kar
+	confed("wh2_dlc11_def_the_blessed_dread", "wh2_main_def_karond_kar", false);
 	
+	-- give har grief to malus
+	transfer_region("wh2_main_the_black_flood_hag_graef", "wh2_main_def_hag_graef", 0, false);
 end
 
 local function setup_empire()
