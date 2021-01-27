@@ -329,46 +329,52 @@ end
 
 local function setup_player_mazda()
 	--# assume mazda starts with kroq nakai and tiktaktoe
+	local player_is_mazda = faction_is_human("wh2_main_lzd_hexoatl");
 	
-	-- kill spirit of the jungle characters
-	
-	-- destroy temple of skulls
-	
-	-- kill last defenders characters
-	
-	-- destroy jaluk oasis
-	
-	-- kill tlaqa characters
+	if player_is_mazda then	
+		-- destroy temple of skulls
+		abandon_region("wh2_main_kingdom_of_beasts_temple_of_skulls", "wh2_main_lzd_last_defenders", false)
+		
+		-- kill last defenders characters
+		kill_faction_armies("wh2_main_lzd_last_defenders");
+		
+		-- destroy jaluk oasis
+		abandon_region("wh2_main_western_jungles_tlaqua", "wh2_main_lzd_tlaqua", false)
+		
+		-- kill tlaqa characters
+		kill_faction_armies("wh2_main_lzd_tlaqua");
+	end
 	
 end
 
 local function setup_player_tyrion()
 	--# assume tyrion starts with teclis
+	local player_is_tyrion = faction_is_human("wh2_main_hef_eataine");
 	
-	-- destroy star tower
-
-	-- kill order of loremaster characters	
-	
-end
-
-local function setup_player_grimgor()
-	--# assume grimgor starts with wuzzag
-	
-	-- give ekrund to teef snatchaz
-	
-	-- kill white hand characters
+	if player_is_tyrion then
+		-- destroy star tower
+		abandon_region("wh2_main_volcanic_islands_the_star_tower", "wh2_main_hef_order_of_loremasters", false)
+		
+		-- kill order of loremaster characters	
+		kill_faction_armies("wh2_main_hef_order_of_loremasters");
+	end
 	
 end
 
 local function setup_player_karl()
 	--# assume karl starts with gelt
+	local player_is_karl = faction_is_human("wh_main_emp_empire");
 	
-	-- give pfeil dorf to black venom
-	
-	-- give fort soll to wissen land
-	
-	-- kill golden order characters
-	
+	if player_is_karl then
+		-- give pfeil dorf to black venom
+		transfer_region("wh2_main_solland_pfeildorf", "wh_main_grn_black_venom", 0, false);
+		
+		-- give fort soll to wissen land
+		transfer_region("wh2_main_fort_soll", "wh_main_emp_wissenland", 0, false);
+		
+		-- kill golden order characters
+		kill_faction_armies("wh2_dlc13_emp_golden_order");
+	end	
 end
 
 local function setup_player_mannfred()
@@ -422,7 +428,6 @@ core:add_listener(
 			cm:callback(function()
 				setup_player_mazda();
 				setup_player_tyrion();
-				setup_player_grimgor();
 				setup_player_karl();
 				setup_player_mannfred();
 			end, 1)
