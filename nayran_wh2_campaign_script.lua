@@ -194,6 +194,12 @@ local function setup_lustria()
 		transfer_region("wh2_main_southern_great_jungle_subatuun", "wh2_main_skv_clan_pestilens", 2, false);
 	end
 	
+	-- war clan mange vs itza
+	force_war("wh2_dlc12_skv_clan_mange", "wh2_main_lzd_itza", false);
+	
+	-- war xeti vs lustria dwarfs
+	force_war("wh2_main_lzd_sentinels_of_xeti", "wh2_main_dwf_spine_of_sotek_dwarfs", false);
+	
 	-- confed mazda with nakai
 	confed("wh2_main_lzd_hexoatl", "wh2_dlc13_lzd_spirits_of_the_jungle", false);
 	
@@ -249,6 +255,12 @@ local function setup_empire()
 	-- peace angrund skull takerz
 	force_peace("wh_main_dwf_karak_izor", "wh_main_grn_skull-takerz", false);
 	
+	-- peace boris leaf cutterz
+	force_peace("wh_main_emp_middenland", "wh2_dlc12_grn_leaf_cutterz_tribe", false);
+	
+	-- war boris red horn
+	force_war("wh_main_emp_middenland", "wh_dlc03_bst_redhorn", false);
+	
 	-- give aarnau to leaf cutterz
 	transfer_region("wh_main_the_wasteland_aarnau", "wh2_dlc12_grn_leaf_cutterz_tribe", 0, false);
 	
@@ -294,10 +306,7 @@ local function setup_bretonia()
 	force_peace("wh_dlc08_nor_norsca", "wh_main_brt_bretonnia", false);
 end
 
-local function setup_nehekhara()
-	-- war repanse with arkhan
-	force_war("wh2_dlc14_brt_chevaliers_de_lyonesse", "wh2_dlc09_tmb_followers_of_nagash", false);
-	
+local function setup_nehekhara()	
 	-- trade repanse with lyonnaise
 	make_trade_agreement("wh2_dlc14_brt_chevaliers_de_lyonesse", "wh_main_brt_lyonesse", false);
 	
@@ -307,8 +316,11 @@ local function setup_nehekhara()
 	-- peace khemri with top knotz
 	force_peace("wh2_dlc09_tmb_khemri", "wh_main_grn_top_knotz", false);
 	
-	-- war khmri with necrath brotherhood
-	force_war("wh2_dlc09_tmb_khemri", "wh2_main_vmp_necrarch_brotherhood", false);
+	-- peace khemri with arkhan
+	force_peace("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_followers_of_nagash", false);
+	
+	-- war khmri with numas
+	force_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_numas", false);
 end
 
 local function setup_badlands()
@@ -327,19 +339,6 @@ local function setup_darklands()
 	
 	-- millitary alliance neferata vs silver host
 	force_millitary_alliance("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_main_vmp_the_silver_host", false);
-	
-	local player_is_arkhan = faction_is_human("wh2_dlc09_tmb_followers_of_nagash");
-	local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_vlad = faction_is_human("wh_main_vmp_schwartzhafen");
-	local player_is_luthor = faction_is_human("wh2_dlc11_cst_vampire_coast");
-	local player_is_dreadfleet = faction_is_human("wh2_dlc11_cst_noctilus");
-	
-	if not player_is_arkhan and not player_is_mannfred and not player_is_vlad and not player_is_luthor and not player_is_dreadfleet then
-	
-		-- give nagashazzar to arkhan
-		transfer_region("wh2_main_the_broken_teeth_nagashizar", "wh2_dlc09_tmb_followers_of_nagash", 2, false);
-		transfer_region("wh2_main_the_broken_teeth_desolation_of_nagash", "wh2_dlc09_tmb_followers_of_nagash", 2, false);
-	end
 end
 
 local function setup_worlds_edge_mountains()
