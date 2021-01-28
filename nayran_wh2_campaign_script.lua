@@ -130,6 +130,21 @@ local function set_settlement_level(region, level, apply_to_player)
     cm:instantly_set_settlement_primary_slot_level(settlement, level);
 end
 
+--# assume add_building_to_region: method(region: string, building: string, ownder_faction: string, apply_to_player: boolean)
+local function add_building_to_region(region, building, owner_faction, apply_to_player)
+    local add_building = true;
+	if apply_to_player == false then
+		local target_is_human = faction_is_human(owner_faction);
+		if target_is_human then
+			add_building = false;
+		end
+	end
+	if add_building == true then
+		cm:add_building_to_settlement(region, building);
+		heal_garrison(region);
+	end
+end
+
 --# assume transfer_region: method(region: string, faction: string, level: integer, apply_to_player: boolean)
 local function transfer_region(region, faction, level, apply_to_player)
 	local transfer = true;
@@ -289,12 +304,22 @@ local function setup_sylvania()
 	
 	local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
 	
+	abandon_region("wh_main_eastern_sylvania_castle_drakenhof", "wh_main_vmp_vampire_counts", false);
+	transfer_region("wh_main_eastern_sylvania_castle_drakenhof", "wh_main_vmp_vampire_counts", 2, false);
+	add_building_to_region("wh_main_eastern_sylvania_castle_drakenhof", "wh_main_vmp_cemetary_2", "wh_main_vmp_vampire_counts", false);
+	
+	abandon_region("wh_main_eastern_sylvania_eschen", "wh_main_vmp_vampire_counts", false);
+	transfer_region("wh_main_eastern_sylvania_eschen", "wh_main_vmp_vampire_counts", 1, false);
+	
 	if not player_is_mannfred then
 		-- give castle templehof to vlad
 		transfer_region("wh_main_western_sylvania_castle_templehof", "wh_main_vmp_schwartzhafen", 0, false);
 		
 		-- give fort oberstyre to vlad	
 		transfer_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_schwartzhafen", 0, false);
+		abandon_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_schwartzhafen", false);
+		transfer_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_schwartzhafen", 2, false);
+		add_building_to_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_cemetary_2", "wh_main_vmp_schwartzhafen", false);
 	end
 	
 	force_defensive_alliance("wh_main_vmp_vampire_counts", "wh_main_vmp_schwartzhafen", false);
