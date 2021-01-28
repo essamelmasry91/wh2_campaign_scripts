@@ -156,60 +156,6 @@ local function abandon_region(region, initial_faction, apply_to_player)
 	end
 end 
 
-local function setup_undead_alliance()
-	
-	local player_is_arkhan = faction_is_human("wh2_dlc09_tmb_followers_of_nagash");
-	local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
-	local player_is_vlad = faction_is_human("wh_main_vmp_schwartzhafen");
-	local player_is_luthor = faction_is_human("wh2_dlc11_cst_vampire_coast");
-	local player_is_dreadfleet = faction_is_human("wh2_dlc11_cst_noctilus");
-	
-	if not player_is_arkhan and not player_is_mannfred and not player_is_vlad and not player_is_luthor and not player_is_dreadfleet then
-		-- war on sentinels
-		force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
-		force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
-		force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
-		force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_the_sentinels", false);
-		force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
-		force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
-		force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
-		force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_the_sentinels", false);
-		
-		-- war on khmeri
-		force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_khemri", false);
-		force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", false);
-		force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", false);
-		force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_khemri", false);
-		force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_khemri", false);
-		force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", false);
-		force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", false);
-		force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_khemri", false);
-		
-		-- war on lybaras
-		force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_lybaras", false);
-		force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_lybaras", false);
-		force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_lybaras", false);
-		force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_lybaras", false);
-		force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_lybaras", false);
-		force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_lybaras", false);
-		force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_lybaras", false);
-		force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_lybaras", false);
-		
-		-- military alliance between dreadfleet arkhan mannfred and lahmia sisterhood
-		force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh_main_vmp_vampire_counts", false);
-		force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc11_cst_noctilus", false);
-		force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc16_vmp_lahmian_sisterhood", false);
-		
-		force_millitary_alliance("wh_main_vmp_vampire_counts", "wh2_dlc11_cst_noctilus", false);
-		force_millitary_alliance("wh_main_vmp_vampire_counts", "wh2_dlc16_vmp_lahmian_sisterhood", false);
-		
-		force_millitary_alliance("wh2_dlc11_cst_noctilus", "wh2_dlc16_vmp_lahmian_sisterhood", false);
-		
-		-- defensive alliance between vlad and mannfred
-		force_defensive_alliance("wh_main_vmp_vampire_counts", "wh_main_vmp_schwartzhafen", false);
-	end
-end
-
 local function setup_8_peaks()
 	-- angrund, mors and crooked moon at war
 	force_war("wh2_main_skv_clan_mors", "wh_main_grn_crooked_moon", true);
@@ -237,9 +183,6 @@ local function setup_lustria()
 		-- give pox march to vampire coast
 		transfer_region("wh2_main_vampire_coast_pox_marsh", "wh2_dlc11_cst_vampire_coast", 0, false);
 		
-		-- give blood swamps to vampire coast
-		transfer_region("wh2_main_vampire_coast_the_blood_swamps", "wh2_dlc11_cst_vampire_coast", 2, false);
-		
 		-- give mangrove coast and sabatuun to pest
 		transfer_region("wh2_main_headhunters_jungle_mangrove_coast", "wh2_main_skv_clan_pestilens", 2, false);
 		transfer_region("wh2_main_southern_great_jungle_subatuun", "wh2_main_skv_clan_pestilens", 2, false);
@@ -251,9 +194,6 @@ local function setup_lustria()
 	-- war mazda with wulfheart 
 	force_war("wh2_main_lzd_hexoatl", "wh2_dlc13_emp_the_huntmarshals_expedition", false);
 	
-	-- trade wulfheart with empire
-	make_trade_agreement("wh2_dlc13_emp_the_huntmarshals_expedition", "wh_main_emp_empire", false);
-	
 	-- peace wulfheart blue vipers
 	force_peace("wh2_dlc13_emp_the_huntmarshals_expedition", "wh2_main_grn_blue_vipers", false);
 	
@@ -263,24 +203,24 @@ local function setup_lustria()
 	-- peace mazda blue vipers
 	force_peace("wh2_main_lzd_hexoatl", "wh2_main_grn_blue_vipers", false)
 	
+	-- trade wulfheart with empire
+	make_trade_agreement("wh2_dlc13_emp_the_huntmarshals_expedition", "wh_main_emp_empire", false);
+	
 	-- skeggi trade with wulfrik
 	make_trade_agreement("wh2_main_nor_skeggi", "wh_dlc08_nor_norsca", false);
 	
 	-- new world colonies trade with estalia
 	make_trade_agreement("wh2_main_emp_new_world_colonies", "wh_main_teb_estalia", false);
+	
+	-- teclis trade with tyrion
+	make_trade_agreement("wh2_main_hef_order_of_loremasters", "wh2_main_hef_high_elves", false);
+	
+	-- felheart trade with karon kar
+	make_trade_agreement("wh2_dlc11_def_the_blessed_dread", "wh2_main_def_karond_kar", false);
 
 end
 
 local function setup_ulthuan()
-	
-	-- confed imrik with caledor
-	confed("wh2_dlc15_hef_imrik", "wh2_main_hef_caledor", false);
-	
-	-- confed teclis with loremasters
-	confed("wh2_main_hef_order_of_loremasters", "wh2_main_hef_saphery", false);
-	
-	-- war alith anar with scourge of khaine
-	force_war("wh2_main_hef_nagarythe", "wh2_main_def_scourge_of_khaine", false);
 	
 	-- no war tyrion teclis eltharion alarielle
 	force_no_war("wh2_main_hef_high_elves", "wh2_main_hef_avelorn", false);
@@ -293,38 +233,40 @@ local function setup_ulthuan()
 	force_no_war("wh2_main_hef_order_of_loremasters", "wh2_main_hef_yvresse", false);
 end
 
-local function setup_nagarond()
-	-- confed lokhir with karon kar
-	confed("wh2_dlc11_def_the_blessed_dread", "wh2_main_def_karond_kar", false);
-	
-	-- give har grief to malus
-	transfer_region("wh2_main_the_black_flood_hag_graef", "wh2_main_def_hag_graef", 0, false);
-end
-
 local function setup_empire()
 	-- peace empire with skullshmasherz
+	force_peace("wh_main_emp_empire", "wh_main_grn_skullsmasherz", false);
 	
 	-- war empire with black venom
+	force_war("wh_main_emp_empire", "wh_main_grn_black_venom", false);
 	
 	-- war empire skull takerz
+	force_war("wh_main_emp_empire", "wh_main_grn_skull-takerz", false);
 	
 	-- peace angrund skull takerz
+	force_peace("wh_main_dwf_karak_izor", "wh_main_grn_skull-takerz", false);
 	
 	-- give aarnau to leaf cutterz
+	transfer_region("wh_main_the_wasteland_aarnau", "wh2_dlc12_grn_leaf_cutterz_tribe", 0, false);
 	
 	-- war drycha talabheim
+	force_war("wh2_dlc16_wef_drycha", "wh_main_emp_talabecland", false);
 	
 end
 
 local function setup_norsca()
 
 	-- confed norsca with skaeling
+	confed("wh_dlc08_nor_norsca", "wh_main_nor_skaeling", false);
 	
 	-- confed wintertooth with naglafarlings
+	confed("wh_dlc08_nor_wintertooth", "wh_dlc08_nor_naglfarlings", false);
 	
 	-- war wulfrik with nordland
+	force_war("wh_dlc08_nor_norsca", "wh_main_emp_nordland", false);
 	
 	-- war wintertooth with kislev
+	force_war("wh_dlc08_nor_wintertooth", "wh_main_ksl_kislev", false);
 	
 end
 
@@ -340,45 +282,72 @@ local function setup_sylvania()
 		transfer_region("wh_main_western_sylvania_fort_oberstyre", "wh_main_vmp_schwartzhafen", 0, false);
 	end
 	
+	force_defensive_alliance("wh_main_vmp_vampire_counts", "wh_main_vmp_schwartzhafen", false);
+	
 end
 
 local function setup_bretonia()
 	-- peace wulfric and brettonia
-	
+	force_peace("wh_dlc08_nor_norsca", "wh_main_brt_bretonnia", false);
 end
 
 local function setup_nehekhara()
 	-- war repanse with arkhan
+	force_war("wh2_dlc14_brt_chevaliers_de_lyonesse", "wh2_dlc09_tmb_followers_of_nagash", false);
 	
-	-- alliance repanse with lyonnaise
+	-- trade repanse with lyonnaise
+	make_trade_agreement("wh2_dlc14_brt_chevaliers_de_lyonesse", "wh_main_brt_lyonesse", false);
 	
 	-- give zandri to khmri
+	transfer_region("wh2_main_land_of_the_dead_zandri", "wh2_dlc09_tmb_khemri", 2, false);
 	
 	-- peace khemri with top knotz
+	force_peace("wh2_dlc09_tmb_khemri", "wh_main_grn_top_knotz", false);
 	
 	-- war khmri with necrath brotherhood
+	force_war("wh2_dlc09_tmb_khemri", "wh2_main_vmp_necrarch_brotherhood", false);
 end
 
 local function setup_badlands()
 	
 	-- confed grom with skull crag
-	
-	-- confed mannfred with strygos empire
+	confed("wh2_dlc15_grn_broken_axe", "wh2_dlc15_grn_skull_crag", false);
 	
 end
 
-local function setup_darklands()
-	-- war malus with imrik
-	
+local function setup_darklands()	
 	-- confed riktus with clan nest
+	confed("wh2_dlc09_skv_clan_rictus", "wh2_dlc14_skv_rictus_clan_nest", false);
+	
+	-- war neferata vs khalida
+	force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_lybaras", false);
+	
+	-- millitary alliance neferata vs silver host
+	force_millitary_alliance("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_main_vmp_the_silver_host", false);
+	
+	local player_is_arkhan = faction_is_human("wh2_dlc09_tmb_followers_of_nagash");
+	local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
+	local player_is_vlad = faction_is_human("wh_main_vmp_schwartzhafen");
+	local player_is_luthor = faction_is_human("wh2_dlc11_cst_vampire_coast");
+	local player_is_dreadfleet = faction_is_human("wh2_dlc11_cst_noctilus");
+	
+	if not player_is_arkhan and not player_is_mannfred and not player_is_vlad and not player_is_luthor and not player_is_dreadfleet then
+	
+		-- give nagashazzar to arkhan
+		transfer_region("wh2_main_the_broken_teeth_nagashizar", "wh2_dlc09_tmb_followers_of_nagash", 2, false);
+		transfer_region("wh2_main_the_broken_teeth_desolation_of_nagash", "wh2_dlc09_tmb_followers_of_nagash", 2, false);
+	end
 end
 
 local function setup_worlds_edge_mountains()
-	-- peace karaz-a-karak with white hand
+	-- peace karaz-a-karak with bloody hand
+	force_peace("wh_main_dwf_dwarfs", "wh_main_grn_orcs_of_the_bloody_hand", false);
 	
 	-- peace karaz-a-karak with scabey eyes
+	force_peace("wh_main_dwf_dwarfs", "wh_main_grn_scabby_eye", false);
 	
 	-- peace karaz-a-karak with red fangs
+	force_peace("wh_main_dwf_dwarfs", "wh_main_grn_red_fangs", false);
 end
 
 local function setup_player_mazda()
@@ -397,20 +366,6 @@ local function setup_player_mazda()
 		
 		-- kill tlaqa characters
 		kill_faction_armies("wh2_main_lzd_tlaqua");
-	end
-	
-end
-
-local function setup_player_tyrion()
-	--# assume tyrion starts with teclis
-	local player_is_tyrion = faction_is_human("wh2_main_hef_eataine");
-	
-	if player_is_tyrion then
-		-- destroy star tower
-		abandon_region("wh2_main_volcanic_islands_the_star_tower", "wh2_main_hef_order_of_loremasters", false)
-		
-		-- kill order of loremaster characters	
-		kill_faction_armies("wh2_main_hef_order_of_loremasters");
 	end
 	
 end
@@ -445,11 +400,9 @@ local function setup_player_mannfred()
 end
 
 local function change_mortal_empires()
-	setup_undead_alliance();
 	setup_8_peaks();
 	setup_lustria();
 	setup_ulthuan();
-	setup_nagarond();
 	setup_empire();
 	setup_norsca();
 	setup_sylvania();
@@ -481,7 +434,6 @@ core:add_listener(
 		if enable_value then
 			cm:callback(function()
 				setup_player_mazda();
-				setup_player_tyrion();
 				setup_player_karl();
 				setup_player_mannfred();
 			end, 1)
