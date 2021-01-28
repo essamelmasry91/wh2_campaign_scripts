@@ -1,8 +1,8 @@
 CI_DEBUG = false;
 CI_EVENTS = {
 	{key = "INTRO", required_stage = 0, first_turn = 15, last_turn = 25, army_spawns = 0, agent_spawns = 0, chaos_effect = ""},
-	{key = "MID_GAME", required_stage = 1, first_turn = 60, last_turn = 70, army_spawns = 4, agent_spawns = 2, chaos_effect = "rises"}, -- rises
-	{key = "END_GAME", required_stage = 2, first_turn = 90, last_turn = 100, army_spawns = 8, agent_spawns = 4, chaos_effect = ""}, -- invasion
+	{key = "MID_GAME", required_stage = 1, first_turn = 60, last_turn = 70, army_spawns = 3, agent_spawns = 2, chaos_effect = "rises"}, -- rises
+	{key = "END_GAME", required_stage = 2, first_turn = 90, last_turn = 100, army_spawns = 5, agent_spawns = 4, chaos_effect = ""}, -- invasion
 	{key = "VICTORY", required_stage = -1, first_turn = -1, last_turn = -1, army_spawns = 0, agent_spawns = 0, chaos_effect = ""}
 };
 CI_CHAOS_CHARACTERS = {
@@ -93,8 +93,8 @@ CI_CHAOS_ARMY_SPAWNS = {
 CI_BEASTMEN_ARMY_SPAWNS = {
 	faction_key = "wh_dlc03_bst_beastmen_chaos",
 	effect_bundle = "wh_main_bundle_military_upkeep_free_force",
-	buildings = {"wh_dlc03_horde_beastmen_herd_5", "wh_dlc03_horde_beastmen_gors_3", "wh_dlc03_horde_beastmen_minotaurs_1"},
-	army_count = 1,
+	buildings = {"wh_dlc03_horde_beastmen_herd_5", "wh_dlc03_horde_beastmen_arcane_2", "wh_dlc03_horde_beastmen_creatures_3", "wh_dlc03_horde_beastmen_razorgors_2", "wh_dlc03_horde_beastmen_gors_4", "wh_dlc03_horde_beastmen_weapons_2", "wh_dlc03_horde_beastmen_giants_1", "wh_dlc03_horde_beastmen_minotaurs_3", "wh_dlc03_horde_beastmen_centigors_3", "wh_dlc03_horde_beastmen_ruination_2"},
+	army_count = 3,
 	positions = {
 		{788, 605}
 	}
