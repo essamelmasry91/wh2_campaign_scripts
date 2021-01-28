@@ -30,12 +30,14 @@ local function heal_garrison(region)
 end
 
 --# assume faction_is_human: method(faction: string)
-local function faction_is_human(faction)
-	return cm:get_faction(faction):is_human();
+local function faction_is_human(current_faction)
+	local faction = cm:get_faction(current_faction);
+	local is_human = faction:is_human();
+	return is_human;
 end
 
 --# assume kill_faction_armies: method(faction_name: string)
-function kill_faction_armies(faction_name)
+local function kill_faction_armies(faction_name)
 	local faction_character_list = cm:get_faction(faction_name):character_list();	
 	for i = 0, faction_character_list:num_items() - 1 do
 		local cur_char = faction_character_list:item_at(i);			
@@ -49,7 +51,9 @@ end;
 local function apply_diplomacy(declarer, declaree, apply_to_player)
 	local apply = true;
 	if apply_to_player == false then
-		if faction_is_human(declarer) == true or faction_is_human(declaree) == true then
+		local declarer_is_human = faction_is_human(declarer);
+		local declaree_is_human = faction_is_human(declaree);
+		if declarer_is_human or declaree_is_human then
 			apply = false;
 		end
 	end
@@ -106,7 +110,7 @@ end
 
 --# assume confed: method(confederator: string, confederated: string, apply_to_player: boolean)
 local function confed(confederator, confederated, apply_to_player)
-	local confederate_factions = apply_diplomacy(declarer, declaree, apply_to_player);
+	local confederate_factions = apply_diplomacy(confederator, confederated, apply_to_player);
 	if confederate_factions then
 		cm:force_confederation(confederator, confederated);
 	end
@@ -129,8 +133,9 @@ end
 --# assume transfer_region: method(region: string, faction: string, level: integer, apply_to_player: boolean)
 local function transfer_region(region, faction, level, apply_to_player)
 	local transfer = true;
-	if apply_to_player == true then
-		if faction_is_human(faction) == true then
+	if apply_to_player == false then
+		local target_is_human = faction_is_human(faction);
+		if target_is_human then
 			transfer = false;
 		end
 	end
@@ -146,8 +151,9 @@ end;
 --# assume abandon_region: method(region: string, initial_faction: string, apply_to_player: boolean)
 local function abandon_region(region, initial_faction, apply_to_player)
 	local abandon = true;
-	if apply_to_player == true then
-		if faction_is_human(initial_faction) == true then
+	if apply_to_player == false then
+		local target_is_human = faction_is_human(initial_faction);
+		if target_is_human == true then
 			abandon = false;
 		end
 	end
@@ -212,9 +218,6 @@ local function setup_lustria()
 	-- new world colonies trade with estalia
 	make_trade_agreement("wh2_main_emp_new_world_colonies", "wh_main_teb_estalia", false);
 	
-	-- teclis trade with tyrion
-	make_trade_agreement("wh2_main_hef_order_of_loremasters", "wh2_main_hef_high_elves", false);
-	
 	-- felheart trade with karon kar
 	make_trade_agreement("wh2_dlc11_def_the_blessed_dread", "wh2_main_def_karond_kar", false);
 
@@ -223,9 +226,9 @@ end
 local function setup_ulthuan()
 	
 	-- no war tyrion teclis eltharion alarielle
-	force_no_war("wh2_main_hef_high_elves", "wh2_main_hef_avelorn", false);
-	force_no_war("wh2_main_hef_high_elves", "wh2_main_hef_order_of_loremasters", false);
-	force_no_war("wh2_main_hef_high_elves", "wh2_main_hef_yvresse", false);
+	force_no_war("wh2_main_hef_eataine", "wh2_main_hef_avelorn", false);
+	force_no_war("wh2_main_hef_eataine", "wh2_main_hef_order_of_loremasters", false);
+	force_no_war("wh2_main_hef_eataine", "wh2_main_hef_yvresse", false);
 	
 	force_no_war("wh2_main_hef_avelorn", "wh2_main_hef_order_of_loremasters", false);
 	force_no_war("wh2_main_hef_avelorn", "wh2_main_hef_yvresse", false);
