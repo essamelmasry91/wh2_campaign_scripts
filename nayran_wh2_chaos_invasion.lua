@@ -1049,7 +1049,7 @@ function CI_declare_war(warring_faction)
 		local faction = faction_list:item_at(i);
 		local faction_key = faction:name();
 		
-		if faction:is_null_interface() == false and faction:is_dead() == false and faction:culture() ~= "wh_main_chs_chaos" and faction:culture() ~= "wh_dlc03_bst_beastmen" and faction:culture() ~= "wh2_main_skv_skaven" then
+		if faction:is_null_interface() == false and faction:is_dead() == false and faction:culture() ~= "wh_main_chs_chaos" and faction:culture() ~= "wh_dlc03_bst_beastmen" and faction:culture() ~= "wh2_main_skv_skaven" and faction:name() ~= "wh2_dlc11_vmp_the_barrow_legion" then
 			cm:force_declare_war(warring_faction, faction_key, false, false);
 			cm:force_diplomacy("faction:"..warring_faction, "faction:"..faction_key, "peace", false, false, true);
 		end
