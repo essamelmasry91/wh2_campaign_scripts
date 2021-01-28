@@ -125,6 +125,112 @@ CI_ARMY_SETTINGS = {
 	{key = "Legendary", multiplier = 3}
 };
 
+--# assume faction_is_human: method(faction: string)
+local function faction_is_human(current_faction)
+	local faction = cm:get_faction(current_faction);
+	local is_human = faction:is_human();
+	return is_human;
+end
+
+--# assume apply_diplomacy: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function apply_diplomacy(declarer, declaree, apply_to_player)
+	local apply = true;
+	if apply_to_player == false then
+		local declarer_is_human = faction_is_human(declarer);
+		local declaree_is_human = faction_is_human(declaree);
+		if declarer_is_human or declaree_is_human then
+			apply = false;
+		end
+	end
+	return apply;
+end;
+
+--# assume force_millitary_alliance: method(proposingFaction: string, targetFaction: string, apply_to_player: boolean)
+local function force_millitary_alliance(proposingFaction, targetFaction, apply_to_player)
+	local force_millitary_alliance = apply_diplomacy(proposingFaction, targetFaction, apply_to_player);
+	if force_millitary_alliance == true then
+		cm:force_alliance(proposingFaction, targetFaction, true);
+	end
+end
+
+--# assume force_no_peace: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function force_no_peace(declarer, declaree, apply_to_player)
+	local force_no_peace = apply_diplomacy(declarer, declaree, apply_to_player);
+	if force_no_peace == true then
+		cm:force_diplomacy("faction:" .. declarer, "faction:" .. declaree, "peace", false, false, true);
+	end
+end
+
+--# assume force_war: method(declarer: string, declaree: string, apply_to_player: boolean)
+local function force_war(declarer, declaree, apply_to_player)
+	local force_war = apply_diplomacy(declarer, declaree, apply_to_player);
+	if force_war == true then
+		cm:force_declare_war(declarer, declaree, true, true);
+	end
+end
+
+local function setup_undead_alliance()
+    
+    local player_is_arkhan = faction_is_human("wh2_dlc09_tmb_followers_of_nagash");
+    local player_is_mannfred = faction_is_human("wh_main_vmp_vampire_counts");
+    local player_is_vlad = faction_is_human("wh_main_vmp_schwartzhafen");
+    local player_is_luthor = faction_is_human("wh2_dlc11_cst_vampire_coast");
+    local player_is_dreadfleet = faction_is_human("wh2_dlc11_cst_noctilus");
+    
+    if not player_is_arkhan and not player_is_mannfred and not player_is_vlad and not player_is_luthor and not player_is_dreadfleet then
+        -- war on sentinels
+        force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
+        force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
+        force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
+		force_war("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_the_sentinels", false);
+        force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_the_sentinels", false);
+        force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_the_sentinels", false);
+        force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_the_sentinels", false);
+        force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_the_sentinels", false);
+		force_no_peace("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_the_sentinels", false);
+        force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_the_sentinels", false);
+        
+        -- war on khmeri
+        force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_khemri", false);
+        force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", false);
+        force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", false);
+		force_war("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_khemri", false);
+        force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_khemri", false);
+        force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_khemri", false);
+        force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_khemri", false);
+        force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_khemri", false);
+		force_no_peace("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_khemri", false);
+        force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_khemri", false);
+        
+        -- war on lybaras
+        force_war("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_lybaras", false);
+        force_war("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_lybaras", false);
+        force_war("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_lybaras", false);
+        force_war("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_lybaras", false);
+		force_war("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_lybaras", false);
+        force_no_peace("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc09_tmb_lybaras", false);
+        force_no_peace("wh_main_vmp_vampire_counts", "wh2_dlc09_tmb_lybaras", false);
+        force_no_peace("wh2_dlc11_cst_noctilus", "wh2_dlc09_tmb_lybaras", false);
+		force_no_peace("wh2_dlc11_cst_vampire_coast", "wh2_dlc09_tmb_lybaras", false);
+        force_no_peace("wh2_dlc16_vmp_lahmian_sisterhood", "wh2_dlc09_tmb_lybaras", false);
+        
+        -- military alliance between dreadfleet arkhan mannfred and lahmia sisterhood
+        force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh_main_vmp_vampire_counts", false);
+        force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc11_cst_noctilus", false);
+        force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc11_cst_vampire_coast", false);
+        force_millitary_alliance("wh2_dlc09_tmb_followers_of_nagash", "wh2_dlc16_vmp_lahmian_sisterhood", false);
+		
+        force_millitary_alliance("wh_main_vmp_vampire_counts", "wh2_dlc11_cst_noctilus", false);
+        force_millitary_alliance("wh_main_vmp_vampire_counts", "wh2_dlc11_cst_vampire_coast", false);
+		force_millitary_alliance("wh_main_vmp_vampire_counts", "wh2_dlc16_vmp_lahmian_sisterhood", false);
+        
+        force_millitary_alliance("wh2_dlc11_cst_noctilus", "wh2_dlc11_cst_vampire_coast", false);
+		force_millitary_alliance("wh2_dlc11_cst_noctilus", "wh2_dlc16_vmp_lahmian_sisterhood", false);
+		
+		force_millitary_alliance("wh2_dlc11_cst_vampire_coast", "wh2_dlc16_vmp_lahmian_sisterhood", false);
+    end
+end
+
 function CI_setup()
 	CI_debug_setup();
 	out.chaos("CI_setup()");
@@ -348,6 +454,7 @@ function CI_Event_2_MidGame(event)
 	CI_spawn_chaos(event.army_spawns);
 	CI_spawn_agents(event.agent_spawns);
 	CI_declare_war(CI_CHAOS_ARMY_SPAWNS.faction_key);
+	setup_undead_alliance();
 	CI_apply_chaos_corruption(event.chaos_effect);
 	CI_personality_swap(2);
 	cm:set_camera_position(518.37, 473.95, 10.83, 0.0, 11.30);
