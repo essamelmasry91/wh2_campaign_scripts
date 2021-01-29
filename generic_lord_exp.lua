@@ -44,12 +44,13 @@ local legendary_lords_subtype = {
 	["dlc06_grn_skarsnik"] = true,
 	["dlc06_grn_wurrzag_da_great_prophet"] = true,
 	["grn_gorfang_rotgut"] = true,
-	["spcha_grn_borgut_facebeater"] = true,
-	["spcha_grn_grokka_goreaxe"] = true,
-	["spcha_grn_tinitt_foureyes"] = true,
-	["spcha_grn_grak_beastbasha"] = true,
-	["spcha_grn_duffskul"] = true,
-	["spcha_grn_snagla_grobspit"] = true,
+	["wh2_dlc15_grn_grom_the_paunch"] = true,
+	["ws_borgut_facebeater"] = true,
+	["ws_grn_tinitt_foureyes"] = true,
+	["ws_grn_grak_beastbasha"] = true,
+	["ws_grn_snagla_grobspit"] = true,
+	["grn_gorbad_ironclaw"] = true,
+	["wh_main_grn_grom"] = true,
 
 	--Dwarfs----------------------------------------------------
 	["dwf_thorgrim_grudgebearer"] = true,
@@ -59,6 +60,12 @@ local legendary_lords_subtype = {
 	["dwf_kazador_dragonslayer"] = true,
 	["dwf_thorek_ironbrow"] = true,
 	["dwf_grimm_burloksson"] = true,
+	["dwf_byrrnoth_grundadrakk"] = true,
+	["dwf_rorek_granitehand"] = true,
+	["dwf_alrik_ranulfsson"] = true,
+	["dwf_barundin_stoneheart"] = true,
+	["dwf_brokk_ironpick"] = true,
+	["dwf_sven_hasselfriesian"] = true,
 
 	--Vampire Counts--------------------------------------------
 	["vmp_mannfred_von_carstein"] = true,
@@ -72,6 +79,7 @@ local legendary_lords_subtype = {
 	["wh2_dlc11_vmp_bloodline_necrarch"] = true,
 	["wh2_dlc11_vmp_bloodline_strigoi"] = true,
 	["wh2_dlc11_vmp_bloodline_von_carstein"] = true,
+    ["vmp_mallobaude"] = true,
 
 	--Bretonnia-------------------------------------------------
 	["brt_louen_leoncouer"] = true,
@@ -91,8 +99,12 @@ local legendary_lords_subtype = {
 	["dlc05_wef_orion"] = true,
 	["dlc05_wef_durthu"] = true,
 	["wef_daith"] = true,
-	["wef_drycha"] = true,
 	["wef_naieth_the_prophetess"] = true,
+    ["wh2_dlc16_wef_sisters_of_twilight"] = true,
+    ["wh2_dlc16_wef_ariel"] = true,
+    ["wh2_dlc16_wef_drycha"] = true,
+    ["wh2_dlc16_wef_coeddil"] = true,
+    ["wef_wychwethyl"] = true,
 
 	--Beastmen--------------------------------------------------
 	["dlc03_bst_khazrak"] = true,
@@ -107,7 +119,7 @@ local legendary_lords_subtype = {
 	["chs_archaon"] = true,
 	["chs_lord_of_change"] = true,
 	["chs_egrimm_van_horstmann"] = true,
-	["chs_lord_of_change_egrimm"] = true,
+	["chs_aekold_helbrass"] = true,
 
 	--Norsca----------------------------------------------------
 	["wh_dlc08_nor_throgg"] = true,
@@ -123,12 +135,16 @@ local legendary_lords_subtype = {
 	["wh2_dlc10_hef_alarielle"] = true,
 	["wh2_dlc10_hef_alith_anar"] = true,
 	["wh2_main_hef_prince_alastar"] = true,
+	["wh2_dlc15_hef_eltharion"] = true,
 	["hef_belannaer"] = true,
 	["hef_caradryan"] = true,
 	["hef_korhil"] = true,
-	["hef_prince_imrik"] = true,
+	["wh2_dlc15_hef_imrik"] = true,
 	["hef_caradryan_hero"] = true,
 	["AK_aislinn"] = true,
+	["wh2_main_hef_eltharion"] = true,
+	["wh2_main_hef_eldyra"] = true,
+	["wh2_main_hef_finudel"] = true,
 
 	--Dark Elves------------------------------------------------
 	["wh2_main_def_malekith"] = true,
@@ -139,6 +155,8 @@ local legendary_lords_subtype = {
 	["def_tullaris_dreadbringer"] = true,
 	["def_tullaris_hero"] = true,
 	["wh2_dlc14_def_malus_darkblade"] = true,
+	["def_rakarth"] = true,
+	["def_hag_queen_malida"] = true,
 
 	--Lizardmen-------------------------------------------------
 	["wh2_main_lzd_kroq_gar"] = true,
@@ -160,7 +178,10 @@ local legendary_lords_subtype = {
 	["wh2_dlc12_skv_ikit_claw"] = true,
 	["wh2_dlc14_skv_deathmaster_snikch"] = true,
 	["skv_feskit"] = true,
-
+	["skv_skweel_gnawtooth"] = true,
+    ["wh2_dlc16_skv_ghoritch"] = true,
+    ["wh2_dlc16_skv_throt_the_unclean"] = true,
+	
 	--Tomb Kings------------------------------------------------
 	["wh2_dlc09_tmb_arkhan"] = true,
 	["wh2_dlc09_tmb_settra"] = true,
