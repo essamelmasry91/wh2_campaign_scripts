@@ -204,13 +204,12 @@ local function setup_lustria()
 		-- give pox march to vampire coast
 		transfer_region("wh2_main_vampire_coast_pox_marsh", "wh2_dlc11_cst_vampire_coast", 0, false);
 		
-		-- give mangrove coast and sabatuun to pest
-		transfer_region("wh2_main_headhunters_jungle_mangrove_coast", "wh2_main_skv_clan_pestilens", 2, false);
-		transfer_region("wh2_main_southern_great_jungle_subatuun", "wh2_main_skv_clan_pestilens", 2, false);
+		-- confed pestilens with mange
+		confed("wh2_main_skv_clan_pestilens", "wh2_dlc12_skv_clan_mange", false);
 	end
 	
 	-- war clan mange vs itza
-	force_war("wh2_dlc12_skv_clan_mange", "wh2_main_lzd_itza", false);
+	confed("wh2_dlc12_skv_clan_mange", "wh2_dlc12_skv_clan_mange", false);
 	
 	-- war xeti vs lustria dwarfs
 	force_war("wh2_main_lzd_sentinels_of_xeti", "wh2_main_dwf_spine_of_sotek_dwarfs", false);
@@ -343,9 +342,6 @@ local function setup_nehekhara()
 	
 	-- peace khemri with arkhan
 	force_peace("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_followers_of_nagash", false);
-	
-	-- war khmri with numas
-	force_war("wh2_dlc09_tmb_khemri", "wh2_dlc09_tmb_numas", false);
 end
 
 local function setup_badlands()
